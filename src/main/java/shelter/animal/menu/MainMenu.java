@@ -1,13 +1,39 @@
 package shelter.animal.menu;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 import shelter.animal.Filters.PetFilters;
+import shelter.animal.service.PetService;
 
 import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Menu {
-    public static void homeMenu() {
+@RequiredArgsConstructor
+@Component
+public class MainMenu implements CommandLineRunner {
+    private final Scanner scanner;
+
+    @Override
+    public void run(String... args){
+        runHomeMenu();
+    }
+
+    private void runHomeMenu() {
+        while (true) {
+            int option;
+            do {
+                showHomeMenu();
+                option = validateParseInteger(scanner.nextLine());
+            } while (option < 0 || option > 5);
+            if (option == 0) return;
+            processingHomeMenuOption(option);
+        }
+    }
+
+    private void showHomeMenu() {
         System.out.println("****************");
         System.out.println("| MENU INICIAL |");
         System.out.println("****************");
@@ -17,9 +43,26 @@ public class Menu {
         System.out.println("[3] Listar pets  por algum critério (nome, idade, raça, etc)");
         System.out.println("[4] Alterar os dados de um pet cadastrado");
         System.out.println("[5] Deletar um pet cadastrado");
-        System.out.println("[6] Sair");
+        System.out.println("[0] Sair");
     }
 
+    private void processingHomeMenuOption(int option) {
+            try {
+                if (option < 0 || option > 5) {
+                    System.out.println("Erro: Número inválido. Por favor, digite um número entre 1 e 6");
+                }
+                switch (option) {
+                    case 1 -> PetService.createPet();
+                    case 2 -> PetService.listPet();
+                    case 3 -> PetService.listPetWithFilter();
+                    case 4 -> PetService.updatePet();
+                    case 5 -> PetService.deletePet();
+                    case 0 -> System.out.println("Programa encerrado");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Erro: Letras e caracteres especiais não são aceitos.");
+            }
+    }
     public static Map<String, String> searchPetWithFilterMenu() {
         Map<Integer, PetFilters> filters = PetFilters.filterMap();
         Map<String, String> parameters = new HashMap<>();
@@ -63,5 +106,9 @@ public class Menu {
             }
         }
         return parameters;
+    }
+
+    private Integer validateParseInteger(String input){
+        return Integer.parseInt(input);
     }
 }

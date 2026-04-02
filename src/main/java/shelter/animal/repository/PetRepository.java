@@ -1,6 +1,6 @@
 package shelter.animal.repository;
 
-import shelter.animal.menu.Menu;
+import shelter.animal.menu.MainMenu;
 import shelter.animal.models.Address;
 import shelter.animal.models.Pet;
 import shelter.animal.models.enums.PetSex;
@@ -29,7 +29,7 @@ public class PetRepository {
     }
 
     public static Map<Integer, Pet> listPetWithFilter() {
-        Map<String, String> parameters = Menu.searchPetWithFilterMenu();
+        Map<String, String> parameters = MainMenu.searchPetWithFilterMenu();
         Map<Integer, Pet> filteredList = new HashMap<>();
         List<Pet> allPets = FileRepository.fileToPet();
         int i = 0;
