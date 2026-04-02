@@ -1,0 +1,21 @@
+spring:
+  config:
+    import: optional:file.env[.properties]
+  application:
+    name: animal-shelter
+  datasource:
+    url: jdbc:mysql://mysql:3306/animal_shelter?useTimezone=true&serverTimezone=UTC&createDatabaseIfNotExist=true
+    username: ${ENV_ROOT_USER:root}
+    password: ${ENV_ROOT_PASSWORD:root}
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  main:
+    banner-mode: "off"
+logging:
+  level:
+    org.springframework: warn
+    org.hibernate: warn
+    com.zaxxer.hikari: warn
+    shelter.animal: warn

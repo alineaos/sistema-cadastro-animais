@@ -1,14 +1,18 @@
 package shelter.animal;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import shelter.animal.menu.Menu;
 import shelter.animal.service.PetService;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+@SpringBootApplication
 public class Main {
 
     public static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) {
+        SpringApplication.run(Main.class, args);
         do {
             Menu.homeMenu();
             try {
