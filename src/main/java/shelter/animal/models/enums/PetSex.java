@@ -1,4 +1,4 @@
-package models.enums;
+package shelter.animal.models.enums;
 
 public enum PetSex {
     FEMEA("F", "Femea"),

@@ -1,4 +1,4 @@
-package models;
+package shelter.animal.models;
 
 public class Address {
     private String street;

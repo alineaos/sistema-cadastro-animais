@@ -1,5 +1,7 @@
-import menu.Menu;
-import service.PetService;
+package shelter.animal;
+
+import shelter.animal.menu.Menu;
+import shelter.animal.service.PetService;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 

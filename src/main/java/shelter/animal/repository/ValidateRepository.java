@@ -1,8 +1,8 @@
-package repository;
+package shelter.animal.repository;
 
-import exceptions.PetValidateException;
-import models.Address;
-import models.Pet;
+import shelter.animal.exceptions.PetValidateException;
+import shelter.animal.models.Address;
+import shelter.animal.models.Pet;
 
 import java.util.regex.Pattern;
 

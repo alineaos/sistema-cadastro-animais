@@ -1,9 +1,9 @@
-package repository;
+package shelter.animal.repository;
 
-import models.Address;
-import models.Pet;
-import models.enums.PetSex;
-import models.enums.PetType;
+import shelter.animal.models.Address;
+import shelter.animal.models.Pet;
+import shelter.animal.models.enums.PetSex;
+import shelter.animal.models.enums.PetType;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

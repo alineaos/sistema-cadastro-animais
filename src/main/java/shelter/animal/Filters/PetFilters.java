@@ -1,4 +1,4 @@
-package Filters;
+package shelter.animal.Filters;
 
 import java.util.HashMap;
 import java.util.Map;

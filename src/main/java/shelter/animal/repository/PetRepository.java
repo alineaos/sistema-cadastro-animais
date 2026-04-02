@@ -1,10 +1,10 @@
-package repository;
+package shelter.animal.repository;
 
-import menu.Menu;
-import models.Address;
-import models.Pet;
-import models.enums.PetSex;
-import models.enums.PetType;
+import shelter.animal.menu.Menu;
+import shelter.animal.models.Address;
+import shelter.animal.models.Pet;
+import shelter.animal.models.enums.PetSex;
+import shelter.animal.models.enums.PetType;
 
 import java.util.HashMap;
 import java.util.List;

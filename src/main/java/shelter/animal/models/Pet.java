@@ -1,8 +1,8 @@
-package models;
+package shelter.animal.models;
 
-import models.enums.PetSex;
-import models.enums.PetType;
-import repository.ValidateRepository;
+import shelter.animal.models.enums.PetSex;
+import shelter.animal.models.enums.PetType;
+import shelter.animal.repository.ValidateRepository;
 
 public class Pet {
     private String name;

@@ -1,6 +1,6 @@
-package menu;
+package shelter.animal.menu;
 
-import Filters.PetFilters;
+import shelter.animal.Filters.PetFilters;
 
 import java.util.HashMap;
 import java.util.Map;

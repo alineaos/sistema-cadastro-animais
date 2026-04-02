@@ -1,10 +1,10 @@
-package service;
+package shelter.animal.service;
 
-import exceptions.PetValidateException;
-import models.Pet;
-import repository.FileRepository;
-import repository.PetRepository;
-import repository.ValidateRepository;
+import shelter.animal.exceptions.PetValidateException;
+import shelter.animal.models.Pet;
+import shelter.animal.repository.FileRepository;
+import shelter.animal.repository.PetRepository;
+import shelter.animal.repository.ValidateRepository;
 
 import java.util.List;
 import java.util.Map;
