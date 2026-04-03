@@ -15,6 +15,7 @@ import java.util.Scanner;
 @Component
 public class MainMenu implements CommandLineRunner {
     private final Scanner scanner;
+    private final PetService service;
 
     @Override
     public void run(String... args){
@@ -52,11 +53,11 @@ public class MainMenu implements CommandLineRunner {
                     System.out.println("Erro: Número inválido. Por favor, digite um número entre 1 e 6");
                 }
                 switch (option) {
-                    case 1 -> PetService.createPet();
-                    case 2 -> PetService.listPet();
-                    case 3 -> PetService.listPetWithFilter();
-                    case 4 -> PetService.updatePet();
-                    case 5 -> PetService.deletePet();
+                    case 1 -> service.createPet();
+                    case 2 -> service.listPet();
+                    case 3 -> service.listPetWithFilter();
+                    case 4 -> service.updatePet();
+                    case 5 -> service.deletePet();
                     case 0 -> System.out.println("Programa encerrado");
                 }
             } catch (InputMismatchException e) {

@@ -1,5 +1,7 @@
 package shelter.animal.repository;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 import shelter.animal.menu.MainMenu;
 import shelter.animal.models.Address;
 import shelter.animal.models.Pet;
@@ -10,17 +12,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Repository
+@RequiredArgsConstructor
 public class PetRepository {
-    public static void createPet(String name, String type, String sex, String breed, String street, String number, String city, Double age, Double weight) {
+    private final ValidateRepository validateRepository;
+    private final FileRepository fileRepository;
+
+    public void createPet(String name, String type, String sex, String breed, String street, String number, String city, Double age, Double weight) {
         Address address = new Address(street, number, city);
         PetType petType = PetType.selectType(type);
         PetSex petSex = PetSex.selectSex(sex);
         Pet petCreated = new Pet(name, petType, petSex, address, age, weight, breed);
-        FileRepository.savePet(petCreated);
+        fileRepository.savePet(petCreated);
     }
 
-    public static void listPet() {
-        List<String> allPetsList = FileRepository.petsFileReader();
+    public void listPet() {
+        List<String> allPetsList = fileRepository.petsFileReader();
         int i = 1;
         for (String pet : allPetsList) {
             System.out.printf("%d. %s\n", i, pet);
@@ -28,10 +35,10 @@ public class PetRepository {
         }
     }
 
-    public static Map<Integer, Pet> listPetWithFilter() {
+    public Map<Integer, Pet> listPetWithFilter() {
         Map<String, String> parameters = MainMenu.searchPetWithFilterMenu();
         Map<Integer, Pet> filteredList = new HashMap<>();
-        List<Pet> allPets = FileRepository.fileToPet();
+        List<Pet> allPets = fileRepository.fileToPet();
         int i = 0;
         for (Pet pet : allPets) {
             boolean matchesAll = true;
@@ -40,7 +47,7 @@ public class PetRepository {
                 String criteriaKey = entry.getKey();
                 String criteriaValue = entry.getValue();
 
-                if (!ValidateRepository.petMatchesFilters(pet, criteriaKey, criteriaValue)) {
+                if (!validateRepository.petMatchesFilters(pet, criteriaKey, criteriaValue)) {
                     matchesAll = false;
                     break;
                 }
@@ -63,17 +70,17 @@ public class PetRepository {
         return filteredList;
     }
 
-    public static void updatePet(int option, Pet petToUpdate, String newData) {
+    public void updatePet(int option, Pet petToUpdate, String newData) {
         boolean hasUpdatedName = false;
         String oldPetName = petToUpdate.getName();
-        Pet updatedPet = ValidateRepository.dataToUpdate(petToUpdate, option, newData);
+        Pet updatedPet = validateRepository.dataToUpdate(petToUpdate, option, newData);
         if (!updatedPet.getName().equalsIgnoreCase(oldPetName)) hasUpdatedName = true;
-        FileRepository.updatePet(updatedPet, hasUpdatedName, oldPetName);
+        fileRepository.updatePet(updatedPet, hasUpdatedName, oldPetName);
     }
 
-    public static void deletePet(Pet petToDelete, boolean isConfirmed) {
+    public void deletePet(Pet petToDelete, boolean isConfirmed) {
         if (isConfirmed) {
-            FileRepository.deletePet(petToDelete);
+            fileRepository.deletePet(petToDelete);
         } else {
             System.out.println("Ação cancelada pelo usuário.");
         }

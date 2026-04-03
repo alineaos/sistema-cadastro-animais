@@ -8,13 +8,13 @@ import java.util.regex.Pattern;
 
 public class ValidateRepository {
     public final static String NAO_INFORMADO = "NÃO INFORMADO";
-    public static final Pattern REGEX = Pattern.compile("([a-zA-z\\s]+|)");
+    public final static Pattern REGEX = Pattern.compile("([a-zA-z\\s]+|)");
 
-    public static String defaultIfEmpty(String line) {
+    public String defaultIfEmpty(String line) {
         return (line.isBlank()) ? NAO_INFORMADO : line;
     }
 
-    public static String validateName(String name) {
+    public String validateName(String name) {
         if (!REGEX.matcher(name).matches()) {
             throw new PetValidateException("Não é permitido o uso de números ou caracteres especiais.");
         }
@@ -22,7 +22,7 @@ public class ValidateRepository {
         return defaultIfEmpty(name);
     }
 
-    public static boolean validateType(String type) {
+    public boolean validateType(String type) {
         if (!type.equalsIgnoreCase("gato") && !type.equalsIgnoreCase("cachorro")) {
             System.out.println("Opção inválida, precisa ser Cachorro ou Gato");
             return false;
@@ -30,7 +30,7 @@ public class ValidateRepository {
         return true;
     }
 
-    public static boolean validateSex(String sex) {
+    public boolean validateSex(String sex) {
         if (!sex.equalsIgnoreCase("f") && !sex.equalsIgnoreCase("m")) {
             System.out.println("Opção inválida, precisa ser F ou M");
             return false;
@@ -38,7 +38,7 @@ public class ValidateRepository {
         return true;
     }
 
-    public static boolean validateStreet(String street) {
+    public boolean validateStreet(String street) {
         if (street.isEmpty()) {
             System.out.println("O nome da rua não pode estar em branco.");
             return false;
@@ -46,7 +46,7 @@ public class ValidateRepository {
         return true;
     }
 
-    public static boolean validateCity(String city) {
+    public boolean validateCity(String city) {
         if (city.isEmpty()) {
             System.out.println("O nome da cidade não pode estar em branco.");
             return false;
@@ -54,7 +54,7 @@ public class ValidateRepository {
         return true;
     }
 
-    public static boolean validateDate(String date) {
+    public boolean validateDate(String date) {
         if (!date.equalsIgnoreCase("meses") && !date.equalsIgnoreCase("anos") && !date.isEmpty()) {
             System.out.println("Opção inválida, precisa ser em meses ou anos");
             return false;
@@ -62,7 +62,7 @@ public class ValidateRepository {
         return true;
     }
 
-    public static Double validateAge(String auxAge) {
+    public Double validateAge(String auxAge) {
         double age = Double.parseDouble(auxAge);
         if (age > 20) {
             throw new PetValidateException("A idade não pode ser maior que 20 anos.");
@@ -70,7 +70,7 @@ public class ValidateRepository {
         return age;
     }
 
-    public static Double validateWeight(String auxWeight) {
+    public Double validateWeight(String auxWeight) {
         double weight = Double.parseDouble(auxWeight);
         if (weight < 0.5 || weight > 60) {
             throw new PetValidateException("O peso precisa estar entre 0.5kg e 60kg.");
@@ -78,28 +78,28 @@ public class ValidateRepository {
         return weight;
     }
 
-    public static String validateBreed(String breed) {
+    public String validateBreed(String breed) {
         if (!REGEX.matcher(breed).matches()) {
             throw new PetValidateException("Não é permitido o uso de números ou caracteres especiais.");
         }
         return defaultIfEmpty(breed);
     }
 
-    public static Double stringToAge(String age) {
+    public Double stringToAge(String age) {
         if (age.equalsIgnoreCase("NÃO INFORMADO")) {
             return null;
         }
         return Double.parseDouble(age.replace(" anos", "").replace(",", "."));
     }
 
-    public static Double stringToWeight(String age) {
+    public Double stringToWeight(String age) {
         if (age.equalsIgnoreCase("NÃO INFORMADO")) {
             return null;
         }
         return Double.parseDouble(age.replace("kg", "").replace(",", "."));
     }
 
-    public static boolean petMatchesFilters(Pet pet, String key, String value) {
+    public boolean petMatchesFilters(Pet pet, String key, String value) {
         return switch (key) {
             case "Name" -> pet.getName().toLowerCase().contains(value.toLowerCase().toLowerCase());
             case "Type" -> pet.getType().getClassification().toLowerCase().contains(value.toLowerCase());
@@ -113,7 +113,7 @@ public class ValidateRepository {
         };
     }
 
-    public static Pet dataToUpdate(Pet petToUpdate, int option, String newData) {
+    public Pet dataToUpdate(Pet petToUpdate, int option, String newData) {
         switch (option) {
             case 1:
                 validateName(newData);

@@ -1,5 +1,6 @@
 package shelter.animal.repository;
 
+import lombok.RequiredArgsConstructor;
 import shelter.animal.models.Address;
 import shelter.animal.models.Pet;
 import shelter.animal.models.enums.PetSex;
@@ -17,14 +18,17 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 public class FileRepository {
-    public static File[] getFiles(){
+    private final ValidateRepository validateRepository;
+
+    public File[] getFiles(){
         File folder = new File("petsCadastrados/");
         File[] list = folder.listFiles();
         return (list != null) ? list : new File[0];
     }
 
-    public static void savePet(Pet pet) {
+    public void savePet(Pet pet) {
         LocalDateTime localDateTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmm");
         String fileName = (localDateTime.format(formatter) + pet.getName()
@@ -39,7 +43,7 @@ public class FileRepository {
 
     }
 
-    public static List<String> petsFileReader() {
+    public List<String> petsFileReader() {
         List<String> allPets = new ArrayList<>();
         for (File file : getFiles()) {
 
@@ -63,7 +67,7 @@ public class FileRepository {
         return allPets;
     }
 
-    public static List<Pet> fileToPet() {
+    public List<Pet> fileToPet() {
         List<Pet> pets = new ArrayList<>();
             for (File file : getFiles()) {
                 List<String> aux = new ArrayList<>();
@@ -81,8 +85,8 @@ public class FileRepository {
                                 PetType.selectType(aux.get(1)),
                                 PetSex.selectSex(aux.get(2).substring(0, 1)),
                                 fileToAdress,
-                                ValidateRepository.stringToAge(aux.get(4)),
-                                ValidateRepository.stringToWeight(aux.get(5)),
+                                validateRepository.stringToAge(aux.get(4)),
+                                validateRepository.stringToWeight(aux.get(5)),
                                 aux.get(6));
                         pets.add(filePet);
                     }
@@ -93,7 +97,7 @@ public class FileRepository {
         return pets;
     }
 
-    public static List<String> readForm() {
+    public List<String> readForm() {
         File form = new File("petsCadastrados/formulario.txt");
         List<String> questions = new ArrayList<>();
         try (FileReader fileReader = new FileReader(form);
@@ -109,7 +113,7 @@ public class FileRepository {
         return questions;
     }
 
-    public static void updatePet(Pet updatedPet, boolean hasUpdatedName, String oldPetName) {
+    public void updatePet(Pet updatedPet, boolean hasUpdatedName, String oldPetName) {
         File fileToUpdate = null;
 
         for (File f : getFiles()) {
@@ -146,7 +150,7 @@ public class FileRepository {
         }
     }
 
-    public static void deletePet(Pet petToDelete) {
+    public void deletePet(Pet petToDelete) {
         File fileToDelete = null;
         for (File f : getFiles()) {
             try {
