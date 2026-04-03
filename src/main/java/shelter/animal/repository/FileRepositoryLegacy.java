@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class FileRepository {
-    private final ValidateRepository validateRepository;
+public class FileRepositoryLegacy {
+    private final ValidateRepositoryLegacy validateRepositoryLegacy;
 
     public File[] getFiles(){
         File folder = new File("petsCadastrados/");
@@ -85,8 +85,8 @@ public class FileRepository {
                                 PetType.selectType(aux.get(1)),
                                 PetSex.selectSex(aux.get(2).substring(0, 1)),
                                 fileToAdress,
-                                validateRepository.stringToAge(aux.get(4)),
-                                validateRepository.stringToWeight(aux.get(5)),
+                                validateRepositoryLegacy.stringToAge(aux.get(4)),
+                                validateRepositoryLegacy.stringToWeight(aux.get(5)),
                                 aux.get(6));
                         pets.add(filePet);
                     }

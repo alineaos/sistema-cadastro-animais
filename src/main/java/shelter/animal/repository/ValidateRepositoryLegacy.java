@@ -6,7 +6,7 @@ import shelter.animal.models.Pet;
 
 import java.util.regex.Pattern;
 
-public class ValidateRepository {
+public class ValidateRepositoryLegacy {
     public final static String NAO_INFORMADO = "NÃO INFORMADO";
     public final static Pattern REGEX = Pattern.compile("([a-zA-z\\s]+|)");
 

@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import shelter.animal.Filters.PetFilters;
-import shelter.animal.service.PetService;
+import shelter.animal.service.PetServiceLegacy;
 
 import java.util.HashMap;
 import java.util.InputMismatchException;
@@ -13,9 +13,9 @@ import java.util.Scanner;
 
 @RequiredArgsConstructor
 @Component
-public class MainMenu implements CommandLineRunner {
+public class MainMenuLegacy implements CommandLineRunner {
     private final Scanner scanner;
-    private final PetService service;
+    private final PetServiceLegacy service;
 
     @Override
     public void run(String... args){

@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import shelter.animal.exceptions.PetValidateException;
 import shelter.animal.models.Pet;
-import shelter.animal.repository.FileRepository;
-import shelter.animal.repository.PetRepository;
-import shelter.animal.repository.ValidateRepository;
+import shelter.animal.repository.FileRepositoryLegacy;
+import shelter.animal.repository.PetRepositoryLegacy;
+import shelter.animal.repository.ValidateRepositoryLegacy;
 
 import java.util.List;
 import java.util.Map;
@@ -14,14 +14,14 @@ import java.util.Scanner;
 
 @Service
 @RequiredArgsConstructor
-public class PetService {
-    private final PetRepository repository;
-    private final ValidateRepository validateRepository;
-    private final FileRepository fileRepository;
+public class PetServiceLegacy {
+    private final PetRepositoryLegacy repository;
+    private final ValidateRepositoryLegacy validateRepositoryLegacy;
+    private final FileRepositoryLegacy fileRepositoryLegacy;
     private static final Scanner SCANNER = new Scanner(System.in);
 
     public void createPet() {
-        List<String> questions = fileRepository.readForm();
+        List<String> questions = fileRepositoryLegacy.readForm();
         String name = null, type = null, sex = null, breed = null;
         String street = null, number = null, city = null;
         Double age = null, weight = null;
@@ -34,7 +34,7 @@ public class PetService {
                 case 1:
                     do {
                         try {
-                            name = validateRepository.validateName(SCANNER.nextLine());
+                            name = validateRepositoryLegacy.validateName(SCANNER.nextLine());
                             isValid = true;
                         } catch (PetValidateException e) {
                             System.out.println("Erro: " + e.getMessage());
@@ -46,7 +46,7 @@ public class PetService {
                 case 2:
                     do {
                         type = SCANNER.nextLine();
-                        isValid = validateRepository.validateType(type);
+                        isValid = validateRepositoryLegacy.validateType(type);
                         if (!isValid) typeAgain();
                     } while (!isValid);
                     break;
@@ -54,7 +54,7 @@ public class PetService {
                 case 3:
                     do {
                         sex = SCANNER.nextLine();
-                        isValid = validateRepository.validateSex(sex);
+                        isValid = validateRepositoryLegacy.validateSex(sex);
                         if (!isValid) typeAgain();
                     } while (!isValid);
                     break;
@@ -63,18 +63,18 @@ public class PetService {
                     do {
                         System.out.print("Digite a rua: ");
                         street = SCANNER.nextLine();
-                        isValid = validateRepository.validateStreet(street);
+                        isValid = validateRepositoryLegacy.validateStreet(street);
                         if (!isValid) typeAgain();
                     } while (!isValid);
 
                     System.out.print("Digite o número: ");
                     number = SCANNER.nextLine();
-                    number = validateRepository.defaultIfEmpty(number);
+                    number = validateRepositoryLegacy.defaultIfEmpty(number);
 
                     do {
                         System.out.print("Digite a cidade: ");
                         city = SCANNER.nextLine();
-                        isValid = validateRepository.validateCity(city);
+                        isValid = validateRepositoryLegacy.validateCity(city);
                         if (!isValid) typeAgain();
                     } while (!isValid);
                     break;
@@ -84,7 +84,7 @@ public class PetService {
                         try {
                             String auxAge = SCANNER.nextLine();
                             if (auxAge.isBlank()) break;
-                            age = validateRepository.validateAge(auxAge);
+                            age = validateRepositoryLegacy.validateAge(auxAge);
                             isValid = true;
                         } catch (PetValidateException | NumberFormatException e) {
                             System.out.println("Erro: " + e.getMessage());
@@ -101,7 +101,7 @@ public class PetService {
                                 age = null;
                                 break;
                             }
-                            isValid = validateRepository.validateDate(date);
+                            isValid = validateRepositoryLegacy.validateDate(date);
                             if (!isValid) typeAgain();
                             if (date.equalsIgnoreCase("meses")) age /= 12;
                         } while (!isValid);
@@ -113,7 +113,7 @@ public class PetService {
                         try {
                             String auxWeight = SCANNER.nextLine();
                             if (auxWeight.isBlank()) break;
-                            weight = validateRepository.validateWeight(auxWeight);
+                            weight = validateRepositoryLegacy.validateWeight(auxWeight);
                             isValid = true;
                         } catch (PetValidateException | NumberFormatException e) {
                             System.out.println("Erro: " + e.getMessage());
@@ -125,7 +125,7 @@ public class PetService {
                 case 7:
                     do {
                         try {
-                            breed = validateRepository.validateBreed(SCANNER.nextLine());
+                            breed = validateRepositoryLegacy.validateBreed(SCANNER.nextLine());
                             isValid = true;
                         } catch (PetValidateException e) {
                             System.out.println("Erro: " + e.getMessage());
