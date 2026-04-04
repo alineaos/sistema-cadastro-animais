@@ -9,9 +9,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SourceType;
+import org.springframework.data.annotation.CreatedDate;
 import shelter.animal.models.enums.PetSex;
 import shelter.animal.models.enums.PetType;
 import shelter.animal.repository.ValidateRepositoryLegacy;
+
+import java.time.LocalDateTime;
 
 @Builder
 @AllArgsConstructor
@@ -37,6 +42,9 @@ public class Pet {
     private Double weight;
     @Column(nullable = false)
     private String breed;
+    @Column(nullable = false, updatable = false)
+    @CreationTimestamp(source = SourceType.DB)
+    private LocalDateTime createdAt;
 
     public Pet(String name, PetType type, PetSex sex, Address address, Double age, Double weight, String breed) {
         this.name = name;
