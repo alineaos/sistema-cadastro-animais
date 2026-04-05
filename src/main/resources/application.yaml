@@ -4,7 +4,7 @@ spring:
   application:
     name: animal-shelter
   datasource:
-    url: jdbc:mysql://mysql:3306/animal_shelter?useTimezone=true&serverTimezone=UTC&createDatabaseIfNotExist=true
+    url: jdbc:mysql://${ENV_DB_HOST:mysql}:3306/animal_shelter?useTimezone=true&serverTimezone=UTC&createDatabaseIfNotExist=true
     username: ${ENV_ROOT_USER:root}
     password: ${ENV_ROOT_PASSWORD:root}
   jpa:
