@@ -1,49 +1,69 @@
 package shelter.animal.models;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.SourceType;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import shelter.animal.models.enums.PetSex;
 import shelter.animal.models.enums.PetType;
 import shelter.animal.repository.ValidateRepositoryLegacy;
+import shelter.animal.repository.converters.AddressConverter;
+import shelter.animal.repository.converters.PetSexConverter;
+import shelter.animal.repository.converters.PetTypeConverter;
 
 import java.time.LocalDateTime;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Pet {
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false)
     private String name;
+
+    @Convert(converter = PetTypeConverter.class)
     @Column(nullable = false)
     private PetType type;
+
+    @Convert(converter = PetSexConverter.class)
     @Column(nullable = false)
     private PetSex sex;
-    @Column(nullable = false)
+
+    @Convert(converter = AddressConverter.class)
+    @Column(name = "address_info", nullable = false)
     private Address address;
+
     @Column(nullable = false)
     private Double age;
+
     @Column(nullable = false)
     private Double weight;
+
     @Column(nullable = false)
     private String breed;
+
+    @CreatedDate
     @Column(nullable = false, updatable = false)
-    @CreationTimestamp(source = SourceType.DB)
     private LocalDateTime createdAt;
 
     public Pet(String name, PetType type, PetSex sex, Address address, Double age, Double weight, String breed) {
@@ -54,54 +74,6 @@ public class Pet {
         this.age = age;
         this.weight = weight;
         this.breed = breed;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public void setAge(Double age) {
-        this.age = age;
-    }
-
-    public void setWeight(Double weight) {
-        this.weight = weight;
-    }
-
-    public void setBreed(String breed) {
-        this.breed = breed;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public PetType getType() {
-        return type;
-    }
-
-    public PetSex getSex() {
-        return sex;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public Double getAge() {
-        return age;
-    }
-
-    public Double getWeight() {
-        return weight;
-    }
-
-    public String getBreed() {
-        return breed;
     }
 
     @Override

@@ -1,16 +1,18 @@
 package shelter.animal.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
 public class Address {
     private String street;
     private String number;
     private String city;
-
-
-    public Address(String street, String number, String city) {
-        this.street = street;
-        this.number = number;
-        this.city = city;
-    }
 
     @Override
     public String toString() {
