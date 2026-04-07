@@ -4,12 +4,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import shelter.animal.dto.request.AddressPostRequest;
 import shelter.animal.dto.request.PetPostRequest;
+import shelter.animal.dto.response.PetGetResponse;
 import shelter.animal.dto.response.PetPostResponse;
 import shelter.animal.models.enums.AgeUnit;
 import shelter.animal.models.enums.PetSex;
 import shelter.animal.models.enums.PetType;
 import shelter.animal.service.PetJpaService;
 import shelter.animal.utils.RequestDtoValidator;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -41,5 +44,9 @@ public class PetJpaController {
 
         return petPostResponse;
 
+    }
+
+    public List<PetGetResponse> findAllPets(){
+        return service.findAllPets();
     }
 }

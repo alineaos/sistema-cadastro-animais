@@ -3,13 +3,19 @@ package shelter.animal.menu;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import shelter.animal.controller.PetJpaController;
+import shelter.animal.dto.response.PetGetResponse;
 import shelter.animal.dto.response.PetPostResponse;
 import shelter.animal.models.enums.AgeUnit;
 import shelter.animal.models.enums.PetSex;
 import shelter.animal.models.enums.PetType;
+import shelter.animal.utils.AppConstants;
 import shelter.animal.utils.InputValidator;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Scanner;
+import java.util.function.Function;
 import java.util.regex.Pattern;
 
 @Component
@@ -25,7 +31,7 @@ public class PetMenu {
             do {
                 showPetMenu();
                 option = validator.parseInteger(scanner.nextLine());
-            } while (option < 0 | option > 1);
+            } while (option < 0 | option > 2);
             if (option == 0) return;
             processingPetMenuOption(option);
         }
@@ -34,6 +40,7 @@ public class PetMenu {
     private void processingPetMenuOption(int option) {
         switch (option) {
             case 1 -> handleSavePet();
+            case 2 -> handleFindAllPets();
             default -> throw new IllegalArgumentException("Opção inválida.");
         }
     }
@@ -44,6 +51,7 @@ public class PetMenu {
         System.out.println("**************************");
         System.out.println("Escolha uma opção: ");
         System.out.println("[1] Cadastrar um novo pet");
+        System.out.println("[2] Listar todos os pets cadastrados");
         System.out.println("[0] Voltar ao menu anterior");
         System.out.print("Opção: ");
     }
@@ -90,6 +98,10 @@ public class PetMenu {
         System.out.printf("\nO Pet com nome '%s' foi cadastrado com sucesso! Id: %d%n", petPostResponse.name(), petPostResponse.id());
     }
 
+    private void handleFindAllPets() {
+        List<PetGetResponse> petGetResponseList = controller.findAllPets();
+        printPetTable(petGetResponseList);
+    }
 //endregion
 
     //region SUBMENUS (AUX MENUS)
@@ -180,4 +192,64 @@ public class PetMenu {
     }
 //endregion
 
+    //region AUX PRINT INTERFACE
+// ========================================================================================================
+// METHODS TO HELP WITH PRINTS (Table formatting)
+// ========================================================================================================
+    private void printPetTable(List<PetGetResponse> petGetResponseList) {
+        if (petGetResponseList.isEmpty()) {
+            System.out.println("Lista vazia. Nenhum pet para exibir.");
+            return;
+        }
+
+        int nameColumLength = getColumnLargestLength(petGetResponseList, PetGetResponse::name, 4);
+        int addressColumLength = getColumnLargestLength(petGetResponseList, p -> p.address().toString(), 8);
+        int breedColumLength = getColumnLargestLength(petGetResponseList, PetGetResponse::breed, 4);
+
+        String tablePattern = "[%-3s] %-" + nameColumLength + "s | %-8s | %-4s | %-" + addressColumLength
+                + "s | %-13s | %-13s | %-" + breedColumLength + "s | %s%n";
+        System.out.printf(tablePattern,
+                "ID", "Nome", "Tipo", "Sexo", "Endereço", "Idade", "Peso", "Raça", "Cadastrado em");
+
+        petGetResponseList.forEach(
+                p -> {
+                    String formattedAge = ageFormatter(p.age(), p.ageUnit());
+
+                    System.out.printf(tablePattern,
+                            p.id(),
+                            p.name(),
+                            p.type().getLabel(),
+                            p.sex().getAbbreviation(),
+                            p.address(),
+                            formattedAge,
+                            p.weight() == null ? AppConstants.NAO_INFORMADO : p.weight() + "kg",
+                            p.breed(),
+                            dateFormatter(p.createdAt()));
+                });
+    }
+
+    private String dateFormatter(LocalDateTime createdAt) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        return formatter.format(createdAt);
+    }
+
+    private String ageFormatter(Double age, AgeUnit ageUnit) {
+        if (age == null && ageUnit == null) {
+            return AppConstants.NAO_INFORMADO;
+        } else {
+            return age + " " + ageUnit.getLabel();
+        }
+    }
+
+    private <T> int getColumnLargestLength(List<T> list, Function<T, String> column, int defaultIfEmpty) {
+        int max = list.stream()
+                .map(column)
+                .map(s -> s == null ? "" : s)
+                .mapToInt(String::length)
+                .max()
+                .orElse(defaultIfEmpty);
+
+        return Math.max(max, defaultIfEmpty);
+    }
+//endregion
 }
