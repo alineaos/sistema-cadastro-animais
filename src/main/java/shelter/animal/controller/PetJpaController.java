@@ -20,8 +20,8 @@ public class PetJpaController {
     private final PetJpaService service;
     private final RequestDtoValidator requestValidator;
 
-    public PetPostResponse savePet(String name, PetType petType, PetSex petSex, String street, String number,
-                                   String city, Double age, AgeUnit ageUnit, Double weight, String breed) {
+    public PetPostResponse save(String name, PetType petType, PetSex petSex, String street, String number,
+                                String city, Double age, AgeUnit ageUnit, Double weight, String breed) {
         AddressPostRequest addressPostRequest = AddressPostRequest.builder()
                 .street(street)
                 .number(number)
@@ -40,13 +40,12 @@ public class PetJpaController {
                 .build();
 
         requestValidator.validateRequest(petPostRequest);
-        PetPostResponse petPostResponse = service.savePet(petPostRequest);
 
-        return petPostResponse;
+        return service.save(petPostRequest);
 
     }
 
-    public List<PetGetResponse> findAllPets(){
-        return service.findAllPets();
+    public List<PetGetResponse> findAll(){
+        return service.findAll();
     }
 }

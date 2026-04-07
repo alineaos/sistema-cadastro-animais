@@ -39,8 +39,8 @@ public class PetMenu {
 
     private void processingPetMenuOption(int option) {
         switch (option) {
-            case 1 -> handleSavePet();
-            case 2 -> handleFindAllPets();
+            case 1 -> handleSave();
+            case 2 -> handleFindAll();
             default -> throw new IllegalArgumentException("Opção inválida.");
         }
     }
@@ -61,7 +61,7 @@ public class PetMenu {
 // METHODS TO HANDLE USER ACTIONS
 // ========================================================================================================
 
-    private void handleSavePet() {
+    private void handleSave() {
         System.out.println("Para cadastrar um pet, preencha a ficha a seguir.");
 
         System.out.print("Nome do pet: ");
@@ -93,13 +93,13 @@ public class PetMenu {
         System.out.print("\nRaça do pet: ");
         String breed = scanner.nextLine();
 
-        PetPostResponse petPostResponse = controller.savePet(name, petType, petSex, street, number, city, age, ageUnit, weight, breed);
+        PetPostResponse petPostResponse = controller.save(name, petType, petSex, street, number, city, age, ageUnit, weight, breed);
 
         System.out.printf("\nO Pet com nome '%s' foi cadastrado com sucesso! Id: %d%n", petPostResponse.name(), petPostResponse.id());
     }
 
-    private void handleFindAllPets() {
-        List<PetGetResponse> petGetResponseList = controller.findAllPets();
+    private void handleFindAll() {
+        List<PetGetResponse> petGetResponseList = controller.findAll();
         printPetTable(petGetResponseList);
     }
 //endregion

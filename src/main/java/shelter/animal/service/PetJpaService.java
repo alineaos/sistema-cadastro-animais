@@ -20,17 +20,15 @@ public class PetJpaService {
     private final PetJpaRepository repository;
     private final PetMapper mapper;
 
-    public PetPostResponse savePet(@Valid PetPostRequest postRequest) {
+    public PetPostResponse save(@Valid PetPostRequest postRequest) {
         Pet petToSave = mapper.toPet(postRequest);
 
         Pet savedPet = repository.save(petToSave);
 
-        PetPostResponse postResponse = mapper.toPetPostResponse(savedPet);
-
-        return postResponse;
+        return mapper.toPetPostResponse(savedPet);
     }
 
-    public List<PetGetResponse> findAllPets(){
+    public List<PetGetResponse> findAll(){
         List<Pet> petList = repository.findAll();
 
         return mapper.toPetGetResponseList(petList);
