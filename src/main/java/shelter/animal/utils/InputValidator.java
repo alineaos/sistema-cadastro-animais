@@ -20,4 +20,12 @@ public class InputValidator {
             throw new BusinessException("'%s' não é um número.".formatted(input));
         }
     }
+
+    public Long parseLong(String input) {
+        try {
+            return Long.parseLong(input);
+        } catch (NumberFormatException e){
+            throw new BusinessException("'%s' não é um número.".formatted(input));
+        }
+    }
 }

@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import shelter.animal.exceptions.BusinessException;
 import shelter.animal.exceptions.InvalidRequestException;
+import shelter.animal.exceptions.NotFoundException;
 import shelter.animal.utils.InputValidator;
 
 import java.util.Scanner;
@@ -42,7 +43,7 @@ public class MainMenuJpa implements CommandLineRunner {
                     case 2 -> mainMenuLegacy.runHomeMenu();
                     default -> System.out.println("Opção inválida");
                 }
-            } catch (BusinessException  e) {
+            } catch (BusinessException | NotFoundException e) {
                 log.warn("Aviso: {}", e.getMessage());
                 System.out.println("Aviso: " + e.getMessage());
             } catch (InvalidRequestException e){

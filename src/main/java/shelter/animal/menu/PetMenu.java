@@ -13,6 +13,7 @@ import shelter.animal.utils.InputValidator;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 import java.util.function.Function;
@@ -31,7 +32,7 @@ public class PetMenu {
             do {
                 showPetMenu();
                 option = validator.parseInteger(scanner.nextLine());
-            } while (option < 0 | option > 2);
+            } while (option < 0 | option > 3);
             if (option == 0) return;
             processingPetMenuOption(option);
         }
@@ -41,6 +42,7 @@ public class PetMenu {
         switch (option) {
             case 1 -> handleSave();
             case 2 -> handleFindAll();
+            case 3 -> handleFindById();
             default -> throw new IllegalArgumentException("Opção inválida.");
         }
     }
@@ -52,6 +54,7 @@ public class PetMenu {
         System.out.println("Escolha uma opção: ");
         System.out.println("[1] Cadastrar um novo pet");
         System.out.println("[2] Listar todos os pets cadastrados");
+        System.out.println("[3] Listar pet por ID");
         System.out.println("[0] Voltar ao menu anterior");
         System.out.print("Opção: ");
     }
@@ -101,6 +104,16 @@ public class PetMenu {
     private void handleFindAll() {
         List<PetGetResponse> petGetResponseList = controller.findAll();
         printPetTable(petGetResponseList);
+    }
+
+    private void handleFindById(){
+        System.out.print("\nDigite o ID: ");
+        Long id = validator.parseLong(scanner.nextLine());
+
+        System.out.printf("Localizando o pet com id %d...\n", id);
+        PetGetResponse petGetResponse = controller.findById(id);
+
+        printPetTable(Collections.singletonList(petGetResponse));
     }
 //endregion
 

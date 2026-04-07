@@ -48,4 +48,8 @@ public class PetJpaController {
     public List<PetGetResponse> findAll(){
         return service.findAll();
     }
+
+    public PetGetResponse findById(Long id){
+        return service.findByIdOrThrowNotFound(id);
+    }
 }

@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import shelter.animal.dto.request.PetPostRequest;
 import shelter.animal.dto.response.PetGetResponse;
 import shelter.animal.dto.response.PetPostResponse;
+import shelter.animal.exceptions.NotFoundException;
 import shelter.animal.mapper.PetMapper;
 import shelter.animal.models.Pet;
 import shelter.animal.repository.PetJpaRepository;
@@ -32,5 +33,11 @@ public class PetJpaService {
         List<Pet> petList = repository.findAll();
 
         return mapper.toPetGetResponseList(petList);
+    }
+
+    public PetGetResponse findByIdOrThrowNotFound(Long id){
+        Pet pet = repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Pet não encontrado."));
+        return mapper.toPetGetResponse(pet);
     }
 }
