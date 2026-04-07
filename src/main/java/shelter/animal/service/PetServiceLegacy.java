@@ -134,7 +134,8 @@ public class PetServiceLegacy {
                     } while (!isValid);
             }
         }
-        repository.createPet(name, type, sex, breed, street, number, city, age, weight);
+        assert sex != null;
+        repository.createPet(name, type, sex.charAt(0), breed, street, number, city, age, weight);
     }
 
     private void typeAgain() {

@@ -1,7 +1,6 @@
 package shelter.animal.menu;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import shelter.animal.Filters.PetFilters;
 import shelter.animal.service.PetServiceLegacy;
@@ -13,16 +12,11 @@ import java.util.Scanner;
 
 @RequiredArgsConstructor
 @Component
-public class MainMenuLegacy implements CommandLineRunner {
+public class MainMenuLegacy {
     private final Scanner scanner;
     private final PetServiceLegacy service;
 
-    @Override
-    public void run(String... args){
-        runHomeMenu();
-    }
-
-    private void runHomeMenu() {
+    public void runHomeMenu() {
         while (true) {
             int option;
             do {

@@ -1,31 +1,48 @@
 package shelter.animal.models.enums;
 
+import shelter.animal.exceptions.BusinessException;
+
 public enum PetSex {
-    FEMEA("F", "Femea"),
-    MACHO("M", "Macho");
+    FEMALE(1, 'F', "Fêmea"),
+    MALE(2, 'M', "Macho");
 
-    private String abbreaviation;
-    private String classification;
+    private final int code;
+    private final char abbreviation;
+    private final String classification;
 
-    PetSex(String abbreaviation, String classification) {
-        this.abbreaviation = abbreaviation;
+    PetSex(int code, char abbreviation, String classification) {
+        this.code = code;
+        this.abbreviation = abbreviation;
         this.classification = classification;
     }
 
-    public String getAbbreaviation() {
-        return abbreaviation;
+    public char getAbbreviation() {
+        return abbreviation;
     }
 
     public String getClassification() {
         return classification;
     }
 
-    public static PetSex selectSex(String abbreaviation){
+    public int getCode() {
+        return code;
+    }
+
+    public static PetSex selectByCode(int codeInput){
+        for (PetSex sex : PetSex.values()){
+            if(codeInput == sex.getCode()){
+                return sex;
+            }
+        }
+        throw new BusinessException("O código [%d] não existe.".formatted(codeInput));
+    }
+
+    public static PetSex selectSex(char abbreviationOption){
         for (PetSex petSex : PetSex.values()){
-            if(petSex.abbreaviation.equalsIgnoreCase(abbreaviation)){
+            if(petSex.abbreviation == abbreviationOption){
                 return petSex;
             }
         }
-        return null;
+        throw new BusinessException("Opção inválida.");
     }
 }

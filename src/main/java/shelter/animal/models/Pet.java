@@ -90,7 +90,7 @@ public class Pet {
         return "1- " +
                 this.getName() +
                 "\n2- " +
-                this.getType().getClassification() +
+                this.getType().getLabel() +
                 "\n3- " +
                 this.getSex().getClassification() +
                 "\n4- " +
@@ -106,7 +106,7 @@ public class Pet {
     public String petFilteredString() {
         return this.getName() +
                 ", " +
-                this.getType().getClassification() +
+                this.getType().getLabel() +
                 ", " +
                 this.getSex().getClassification() +
                 ", " +

@@ -1,23 +1,40 @@
 package shelter.animal.models.enums;
 
+import shelter.animal.exceptions.BusinessException;
+
 public enum PetType {
-    GATO("Gato"),
-    CACHORRO("Cachorro");
+    CAT(1, "Gato"),
+    DOG(2, "Cachorro");
 
-    private String classification;
+    private final int code;
+    private final String label;
 
-    PetType(String classification){
-        this.classification = classification;
+    PetType(int code, String label) {
+        this.code = code;
+        this.label = label;
     }
 
-    public String getClassification(){
-        return classification;
+    public int getCode() {
+        return code;
     }
 
-    public static PetType selectType(String classification){
-        for (PetType petType : PetType.values()){
-            if(petType.classification.equalsIgnoreCase(classification)){
-                return petType;
+    public String getLabel() {
+        return label;
+    }
+
+    public static PetType selectByCode(int codeInput){
+        for (PetType classification : PetType.values()){
+            if(codeInput == classification.getCode()){
+                return classification;
+            }
+        }
+        throw new BusinessException("O código [%d] não existe.".formatted(codeInput));
+    }
+
+    public static PetType selectByType(String classificationInput){
+        for (PetType classification : PetType.values()){
+            if(classification.label.equalsIgnoreCase(classificationInput)){
+                return classification;
             }
         }
         return null;

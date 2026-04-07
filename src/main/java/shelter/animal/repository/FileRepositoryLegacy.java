@@ -1,6 +1,7 @@
 package shelter.animal.repository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import shelter.animal.models.Address;
 import shelter.animal.models.Pet;
 import shelter.animal.models.enums.PetSex;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
+@Component
 public class FileRepositoryLegacy {
     private final ValidateRepositoryLegacy validateRepositoryLegacy;
 
@@ -82,8 +84,8 @@ public class FileRepositoryLegacy {
                         String[] address = aux.get(3).split(",");
                         Address fileToAdress = new Address(address[0], address[1], address[2]);
                         Pet filePet = new Pet(aux.get(0),
-                                PetType.selectType(aux.get(1)),
-                                PetSex.selectSex(aux.get(2).substring(0, 1)),
+                                PetType.selectByType(aux.get(1)),
+                                PetSex.selectSex(aux.get(2).charAt(0)),
                                 fileToAdress,
                                 validateRepositoryLegacy.stringToAge(aux.get(4)),
                                 validateRepositoryLegacy.stringToWeight(aux.get(5)),

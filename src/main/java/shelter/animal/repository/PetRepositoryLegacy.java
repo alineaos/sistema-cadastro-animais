@@ -18,9 +18,9 @@ public class PetRepositoryLegacy {
     private final ValidateRepositoryLegacy validateRepositoryLegacy;
     private final FileRepositoryLegacy fileRepositoryLegacy;
 
-    public void createPet(String name, String type, String sex, String breed, String street, String number, String city, Double age, Double weight) {
+    public void createPet(String name, String type, char sex, String breed, String street, String number, String city, Double age, Double weight) {
         Address address = new Address(street, number, city);
-        PetType petType = PetType.selectType(type);
+        PetType petType = PetType.selectByType(type);
         PetSex petSex = PetSex.selectSex(sex);
         Pet petCreated = new Pet(name, petType, petSex, address, age, weight, breed);
         fileRepositoryLegacy.savePet(petCreated);

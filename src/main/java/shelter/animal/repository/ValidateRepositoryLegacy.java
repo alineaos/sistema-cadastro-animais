@@ -1,11 +1,13 @@
 package shelter.animal.repository;
 
+import org.springframework.stereotype.Component;
 import shelter.animal.exceptions.PetValidateException;
 import shelter.animal.models.Address;
 import shelter.animal.models.Pet;
 
 import java.util.regex.Pattern;
 
+@Component
 public class ValidateRepositoryLegacy {
     public final static String NAO_INFORMADO = "NÃO INFORMADO";
     public final static Pattern REGEX = Pattern.compile("([a-zA-z\\s]+|)");
@@ -102,7 +104,7 @@ public class ValidateRepositoryLegacy {
     public boolean petMatchesFilters(Pet pet, String key, String value) {
         return switch (key) {
             case "Name" -> pet.getName().toLowerCase().contains(value.toLowerCase().toLowerCase());
-            case "Type" -> pet.getType().getClassification().toLowerCase().contains(value.toLowerCase());
+            case "Type" -> pet.getType().getLabel().toLowerCase().contains(value.toLowerCase());
             case "Sex" -> pet.getSex().getClassification().toLowerCase().contains(value.toLowerCase());
             case "Age" -> pet.getAge() != null && pet.getAge().toString().toLowerCase().contains(value.toLowerCase());
             case "Weight" ->
