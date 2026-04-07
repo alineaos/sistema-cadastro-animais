@@ -5,12 +5,13 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
+import shelter.animal.models.enums.AgeUnit;
 import shelter.animal.models.enums.PetSex;
 import shelter.animal.models.enums.PetType;
 
 @Builder
 public record PetPostRequest(
-        @Pattern(regexp = "[a-zA-ZÀ-ÃÉÊÍÓ-ÕÚÇà-ãéêíó-õúç\\s]+"
+        @Pattern(regexp = "[a-zA-ZÀ-ÃÉÊÍÓ-ÕÚÇà-ãéêíó-õúç\\s]*"
                 , message = "O nome deve conter apenas letras.")
         String name,
         @NotNull(message = "O tipo do animal é obrigatório")
@@ -20,6 +21,7 @@ public record PetPostRequest(
         @NotNull(message = "O endereço é obrigatório")
         AddressPostRequest address,
         Double age,
+        AgeUnit ageUnit,
         @DecimalMin(value = "0.5", message = "O peso não pode ser menor que 0.5kg")
         @DecimalMax(value = "60.0", message = "O peso não pode ser maior que 60kg")
         Double weight,

@@ -15,10 +15,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import shelter.animal.models.enums.AgeUnit;
 import shelter.animal.models.enums.PetSex;
 import shelter.animal.models.enums.PetType;
 import shelter.animal.repository.ValidateRepositoryLegacy;
 import shelter.animal.repository.converters.AddressConverter;
+import shelter.animal.repository.converters.AgeUnitConverter;
+import shelter.animal.repository.converters.NumberConverter;
 import shelter.animal.repository.converters.PetSexConverter;
 import shelter.animal.repository.converters.PetTypeConverter;
 
@@ -53,10 +56,16 @@ public class Pet {
     @Column(name = "address_info", nullable = false)
     private Address address;
 
-    @Column(nullable = false)
+    @Convert(converter = NumberConverter.class)
+    @Column(name = "age_value")
     private Double age;
 
-    @Column(nullable = false)
+    @Convert(converter = AgeUnitConverter.class)
+    @Column(name = "age_unit")
+    private AgeUnit ageUnit;
+
+    @Convert(converter = NumberConverter.class)
+    @Column
     private Double weight;
 
     @Column(nullable = false)
