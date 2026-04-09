@@ -1,9 +1,10 @@
 package shelter.animal.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 import shelter.animal.models.Pet;
 
 @Repository
-public interface PetJpaRepository extends JpaRepository<Pet, Long> {
+public interface PetJpaRepository extends JpaRepository<Pet, Long>, JpaSpecificationExecutor<Pet> {
 }

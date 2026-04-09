@@ -2,6 +2,8 @@ package shelter.animal.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import shelter.animal.dto.AddressFilter;
+import shelter.animal.dto.PetFilter;
 import shelter.animal.dto.request.AddressPostRequest;
 import shelter.animal.dto.request.PetPostRequest;
 import shelter.animal.dto.response.PetGetResponse;
@@ -12,7 +14,9 @@ import shelter.animal.models.enums.PetType;
 import shelter.animal.service.PetJpaService;
 import shelter.animal.utils.RequestDtoValidator;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -51,5 +55,31 @@ public class PetJpaController {
 
     public PetGetResponse findById(Long id){
         return service.findByIdOrThrowNotFound(id);
+    }
+
+    public List<PetGetResponse> findByCriteria(Map<String, Object> params){
+
+        AddressFilter addressFilter = null;
+        if (params.containsKey("city")){
+            addressFilter = AddressFilter.builder()
+                    .street((String) params.get("street"))
+                    .number((String) params.get("number"))
+                    .city((String) params.get("city"))
+                    .build();
+        }
+
+        PetFilter petFilter = PetFilter.builder()
+                .name((String) params.get("name"))
+                .type((PetType) params.get("type"))
+                .sex((PetSex) params.get("sex"))
+                .address(addressFilter)
+                .age((Double) params.get("age"))
+                .ageUnit((AgeUnit) params.get("ageUnit"))
+                .weight((Double) params.get("weight"))
+                .breed((String) params.get("breed"))
+                .createdAt((LocalDate) params.get("createdAt"))
+                .build();
+
+        return service.findByCriteria(petFilter);
     }
 }

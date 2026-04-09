@@ -14,7 +14,9 @@ import shelter.animal.utils.InputValidator;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.function.Function;
 import java.util.regex.Pattern;
@@ -32,7 +34,7 @@ public class PetMenu {
             do {
                 showPetMenu();
                 option = validator.parseInteger(scanner.nextLine());
-            } while (option < 0 | option > 3);
+            } while (option < 0 | option > 4);
             if (option == 0) return;
             processingPetMenuOption(option);
         }
@@ -43,6 +45,7 @@ public class PetMenu {
             case 1 -> handleSave();
             case 2 -> handleFindAll();
             case 3 -> handleFindById();
+            case 4 -> handleFindByCriteria();
             default -> throw new IllegalArgumentException("Opção inválida.");
         }
     }
@@ -55,6 +58,7 @@ public class PetMenu {
         System.out.println("[1] Cadastrar um novo pet");
         System.out.println("[2] Listar todos os pets cadastrados");
         System.out.println("[3] Listar pet por ID");
+        System.out.println("[4] Listar por critérios");
         System.out.println("[0] Voltar ao menu anterior");
         System.out.print("Opção: ");
     }
@@ -106,7 +110,7 @@ public class PetMenu {
         printPetTable(petGetResponseList);
     }
 
-    private void handleFindById(){
+    private void handleFindById() {
         System.out.print("\nDigite o ID: ");
         Long id = validator.parseLong(scanner.nextLine());
 
@@ -115,6 +119,75 @@ public class PetMenu {
 
         printPetTable(Collections.singletonList(petGetResponse));
     }
+
+    private void handleFindByCriteria() {
+        Map<String, Object> filters = new HashMap<>();
+        while (true) {
+            System.out.println("Selecione o parâmetro (ou 0 para iniciar a busca).");
+            showPetFilterMenu();
+            int option = validator.parseInteger(scanner.nextLine());
+
+            if (option == 0) break;
+
+            if (isAlreadySelected(option, filters)) {
+                System.out.println("Esse filtro já foi aplicado. Escolha outro ou digite 0 para buscar.");
+                continue;
+            }
+
+            switch (option) {
+                case 1 -> {
+                    System.out.print("\nDigite o nome a ser buscado: ");
+                    filters.put("name", scanner.nextLine());
+                }
+
+                case 2 -> filters.put("type", runPetClassificationMenu());
+
+                case 3 -> filters.put("sex", runPetSexMenu());
+
+                case 4 -> {
+                    System.out.print("\nDigite a idade: ");
+                    filters.put("age", validator.parseDouble(scanner.nextLine()));
+                    filters.put("ageUnit", runAgeUnitMenu());
+                }
+
+                case 5 -> {
+                    System.out.print("\nDigite o peso: ");
+                    filters.put("weight", validator.parseDouble(scanner.nextLine()));
+                }
+
+                case 6 -> {
+                    System.out.print("\nDigite a raça: ");
+                    filters.put("breed", scanner.nextLine());
+                }
+
+                case 7 -> {
+                    System.out.println("Preencha o endereço completo.");
+                    System.out.print("Digite a rua: ");
+                    filters.put("number", parseTextInputNonBlank("O nome da rua não pode estar em branco. Digite novamente: "));
+
+                    System.out.print("\nDigite o número ou deixe em branco: ");
+                    filters.put("number", parseAddressNumberInput());
+
+                    System.out.print("\nDigite a cidade: ");
+                    filters.put("city", parseTextInputNonBlank("O nome da rua não pode estar em branco. Digite novamente: "));
+                }
+
+                case 8 -> {
+                    System.out.println("Digite a data no formato DD/MM/AAAA");
+                    filters.put("createdAt", validator.parseDate(scanner.nextLine()));
+                }
+            }
+            if (filters.size() >= 8) {
+                System.out.println("Todos os filtros já foram preenchidos.");
+            }
+
+        }
+
+        List<PetGetResponse> petGetResponseList = controller.findByCriteria(filters);
+
+        printPetTable(petGetResponseList);
+    }
+
 //endregion
 
     //region SUBMENUS (AUX MENUS)
@@ -202,6 +275,32 @@ public class PetMenu {
             return null;
         }
         return validator.parseDouble(numberInput);
+    }
+
+    private void showPetFilterMenu() {
+        System.out.println("[1] Nome");
+        System.out.println("[2] Tipo");
+        System.out.println("[3] Sexo");
+        System.out.println("[4] Idade");
+        System.out.println("[5] Peso");
+        System.out.println("[6] Raça");
+        System.out.println("[7] Endereço");
+        System.out.println("[8] Dia do cadastro");
+        System.out.print("Opção: ");
+    }
+
+    private boolean isAlreadySelected(int choice, Map<String, Object> filters) {
+        return switch (choice) {
+            case 1 -> filters.containsKey("name");
+            case 2 -> filters.containsKey("type");
+            case 3 -> filters.containsKey("sex");
+            case 4 -> filters.containsKey("age");
+            case 5 -> filters.containsKey("weight");
+            case 6 -> filters.containsKey("breed");
+            case 7 -> filters.containsKey("city");
+            case 8 -> filters.containsKey("createdAt");
+            default -> false;
+        };
     }
 //endregion
 
