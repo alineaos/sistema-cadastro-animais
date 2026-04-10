@@ -34,7 +34,7 @@ public class PetMenu {
             do {
                 showPetMenu();
                 option = validator.parseInteger(scanner.nextLine());
-            } while (option < 0 | option > 4);
+            } while (option < 0 | option > 5);
             if (option == 0) return;
             processingPetMenuOption(option);
         }
@@ -46,6 +46,7 @@ public class PetMenu {
             case 2 -> handleFindAll();
             case 3 -> handleFindById();
             case 4 -> handleFindByCriteria();
+            case 5 -> handleDelete();
             default -> throw new IllegalArgumentException("Opção inválida.");
         }
     }
@@ -59,6 +60,7 @@ public class PetMenu {
         System.out.println("[2] Listar todos os pets cadastrados");
         System.out.println("[3] Listar pet por ID");
         System.out.println("[4] Listar por critérios");
+        System.out.println("[5] Deletar cadastro");
         System.out.println("[0] Voltar ao menu anterior");
         System.out.print("Opção: ");
     }
@@ -186,6 +188,15 @@ public class PetMenu {
         List<PetGetResponse> petGetResponseList = controller.findByCriteria(filters);
 
         printPetTable(petGetResponseList);
+    }
+
+    private void handleDelete(){
+        System.out.println("Digite o ID do cadastro a ser deletado. ");
+        System.out.print("ID: ");
+        Long id = validator.parseLong(scanner.nextLine());
+
+        controller.delete(id);
+        System.out.println("Cadastro deletado com sucesso.");
     }
 
 //endregion

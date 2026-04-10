@@ -82,4 +82,8 @@ public class PetJpaController {
 
         return service.findByCriteria(petFilter);
     }
+
+    public void delete(Long id){
+        service.delete(id);
+    }
 }

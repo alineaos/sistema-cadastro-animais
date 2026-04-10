@@ -31,19 +31,19 @@ public class PetJpaService {
         return mapper.toPetPostResponse(savedPet);
     }
 
-    public List<PetGetResponse> findAll(){
+    public List<PetGetResponse> findAll() {
         List<Pet> petList = repository.findAll();
 
         return mapper.toPetGetResponseList(petList);
     }
 
-    public PetGetResponse findByIdOrThrowNotFound(Long id){
+    public PetGetResponse findByIdOrThrowNotFound(Long id) {
         Pet pet = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Pet não encontrado."));
         return mapper.toPetGetResponse(pet);
     }
 
-    public List<PetGetResponse> findByCriteria(PetFilter filter){
+    public List<PetGetResponse> findByCriteria(PetFilter filter) {
         List<Pet> petList = repository.findAll(
                 PetSpecification.hasName(filter.name())
                         .and(PetSpecification.hasType(filter.type()))
@@ -56,5 +56,14 @@ public class PetJpaService {
         );
 
         return mapper.toPetGetResponseList(petList);
+    }
+
+    public void delete(Long id) {
+        Pet petToDelete = assertPetExists(id);
+        repository.delete(petToDelete);
+    }
+
+    private Pet assertPetExists(Long id) {
+        return repository.findById(id).orElseThrow(() -> new NotFoundException("ID inválido. Pet não encontrado."));
     }
 }
