@@ -241,6 +241,8 @@ public class PetMenu {
         String newBreed = scanner.nextLine();
 
         controller.update(id, newName, newStreet, newNumber, newCity, newAge, newAgeUnit, newWeight, newBreed);
+
+        System.out.println("Cadastro atualizado com sucesso.");
     }
 
 //endregion

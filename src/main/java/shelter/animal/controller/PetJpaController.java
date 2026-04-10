@@ -108,6 +108,7 @@ public class PetJpaController {
                 .breed(breed)
                 .build();
 
+        requestValidator.validateRequest(petPatchRequest);
 
         service.update(id, petPatchRequest);
     }
