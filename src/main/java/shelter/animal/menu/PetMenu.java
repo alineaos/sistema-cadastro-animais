@@ -34,7 +34,7 @@ public class PetMenu {
             do {
                 showPetMenu();
                 option = validator.parseInteger(scanner.nextLine());
-            } while (option < 0 | option > 5);
+            } while (option < 0 | option > 6);
             if (option == 0) return;
             processingPetMenuOption(option);
         }
@@ -47,6 +47,7 @@ public class PetMenu {
             case 3 -> handleFindById();
             case 4 -> handleFindByCriteria();
             case 5 -> handleDelete();
+            case 6 -> handleUpdate();
             default -> throw new IllegalArgumentException("Opção inválida.");
         }
     }
@@ -61,6 +62,7 @@ public class PetMenu {
         System.out.println("[3] Listar pet por ID");
         System.out.println("[4] Listar por critérios");
         System.out.println("[5] Deletar cadastro");
+        System.out.println("[6] Atualizar cadastro");
         System.out.println("[0] Voltar ao menu anterior");
         System.out.print("Opção: ");
     }
@@ -197,6 +199,48 @@ public class PetMenu {
 
         controller.delete(id);
         System.out.println("Cadastro deletado com sucesso.");
+    }
+
+    private void handleUpdate(){
+        System.out.println("Digite o ID do cadastro a ser atualizado.");
+        System.out.print("ID: ");
+        Long id = validator.parseLong(scanner.nextLine());
+        PetGetResponse petFromDb = controller.findById(id);
+        printPetTable(Collections.singletonList(petFromDb));
+        System.out.println("\nLembre-se: Não é possível alterar o id, tipo ou sexo do pet cadastrado.");
+
+        System.out.printf("Nome atual: %s\n", petFromDb.name());
+        System.out.print("Digite o novo nome ou enter para manter o atual: ");
+        String newName = scanner.nextLine();
+
+        System.out.printf("Rua atual: %s\n", petFromDb.address().street());
+        System.out.print("Digite a nova rua ou enter para manter a atual: ");
+        String newStreet = scanner.nextLine();
+
+        System.out.printf("Número atual: %s\n", petFromDb.address().number());
+        System.out.print("Digite o novo número ou enter para manter o atual: ");
+        String newNumber = scanner.nextLine();
+
+        System.out.printf("Cidade atual: %s\n", petFromDb.address().city());
+        System.out.print("Digite a nova cidade ou enter para manter a atual: ");
+        String newCity = scanner.nextLine();
+
+        System.out.printf("Idade atual: %s %s\n", petFromDb.age(), petFromDb.ageUnit().getLabel());
+        System.out.print("Digite a nova idade ou enter para manter a atual: ");
+        Double newAge = parseNullableDouble();
+
+        AgeUnit newAgeUnit = null;
+        if (newAge != null) newAgeUnit = runAgeUnitMenu();
+
+        System.out.printf("Peso atual: %s\n", petFromDb.weight());
+        System.out.print("Digite o novo peso ou enter para manter o atual: ");
+        Double newWeight = parseNullableDouble();
+
+        System.out.printf("Raça atual: %s\n", petFromDb.breed());
+        System.out.print("Digite a nova raça ou enter para manter a atual: ");
+        String newBreed = scanner.nextLine();
+
+        controller.update(id, newName, newStreet, newNumber, newCity, newAge, newAgeUnit, newWeight, newBreed);
     }
 
 //endregion

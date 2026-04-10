@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import shelter.animal.dto.AddressFilter;
 import shelter.animal.dto.PetFilter;
+import shelter.animal.dto.request.AddressPatchRequest;
 import shelter.animal.dto.request.AddressPostRequest;
+import shelter.animal.dto.request.PetPatchRequest;
 import shelter.animal.dto.request.PetPostRequest;
 import shelter.animal.dto.response.PetGetResponse;
 import shelter.animal.dto.response.PetPostResponse;
@@ -49,18 +51,18 @@ public class PetJpaController {
 
     }
 
-    public List<PetGetResponse> findAll(){
+    public List<PetGetResponse> findAll() {
         return service.findAll();
     }
 
-    public PetGetResponse findById(Long id){
+    public PetGetResponse findById(Long id) {
         return service.findByIdOrThrowNotFound(id);
     }
 
-    public List<PetGetResponse> findByCriteria(Map<String, Object> params){
+    public List<PetGetResponse> findByCriteria(Map<String, Object> params) {
 
         AddressFilter addressFilter = null;
-        if (params.containsKey("city")){
+        if (params.containsKey("city")) {
             addressFilter = AddressFilter.builder()
                     .street((String) params.get("street"))
                     .number((String) params.get("number"))
@@ -83,7 +85,30 @@ public class PetJpaController {
         return service.findByCriteria(petFilter);
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         service.delete(id);
+    }
+
+    public void update(Long id, String name, String street, String number, String city,
+                       Double age, AgeUnit ageUnit, Double weight, String breed) {
+
+
+        AddressPatchRequest addressPatchRequest = AddressPatchRequest.builder()
+                .street(street)
+                .number(number)
+                .city(city)
+                .build();
+
+        PetPatchRequest petPatchRequest = PetPatchRequest.builder()
+                .name(name)
+                .address(addressPatchRequest)
+                .age(age)
+                .ageUnit(ageUnit)
+                .weight(weight)
+                .breed(breed)
+                .build();
+
+
+        service.update(id, petPatchRequest);
     }
 }
