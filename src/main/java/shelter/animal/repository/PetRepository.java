@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import shelter.animal.models.Pet;
 
 @Repository
-public interface PetJpaRepository extends JpaRepository<Pet, Long>, JpaSpecificationExecutor<Pet> {
+public interface PetRepository extends JpaRepository<Pet, Long>, JpaSpecificationExecutor<Pet> {
 }

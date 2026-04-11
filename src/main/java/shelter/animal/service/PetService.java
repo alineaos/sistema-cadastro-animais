@@ -13,7 +13,7 @@ import shelter.animal.exceptions.NotFoundException;
 import shelter.animal.mapper.PetMapper;
 import shelter.animal.models.Address;
 import shelter.animal.models.Pet;
-import shelter.animal.repository.PetJpaRepository;
+import shelter.animal.repository.PetRepository;
 import shelter.animal.repository.specifications.PetSpecification;
 
 import java.util.List;
@@ -21,8 +21,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Validated
 @Service
-public class PetJpaService {
-    private final PetJpaRepository repository;
+public class PetService {
+    private final PetRepository repository;
     private final PetMapper mapper;
 
     public PetPostResponse save(@Valid PetPostRequest postRequest) {

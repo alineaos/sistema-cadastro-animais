@@ -2,7 +2,7 @@ package shelter.animal.menu;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import shelter.animal.controller.PetJpaController;
+import shelter.animal.controller.PetController;
 import shelter.animal.dto.response.PetGetResponse;
 import shelter.animal.dto.response.PetPostResponse;
 import shelter.animal.models.enums.AgeUnit;
@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 public class PetMenu {
     private final Scanner scanner;
     private final InputValidator validator;
-    private final PetJpaController controller;
+    private final PetController controller;
 
     public void runPetMenu() {
         while (true) {

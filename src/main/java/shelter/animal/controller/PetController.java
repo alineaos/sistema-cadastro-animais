@@ -13,7 +13,7 @@ import shelter.animal.dto.response.PetPostResponse;
 import shelter.animal.models.enums.AgeUnit;
 import shelter.animal.models.enums.PetSex;
 import shelter.animal.models.enums.PetType;
-import shelter.animal.service.PetJpaService;
+import shelter.animal.service.PetService;
 import shelter.animal.utils.RequestDtoValidator;
 
 import java.time.LocalDate;
@@ -22,8 +22,8 @@ import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
-public class PetJpaController {
-    private final PetJpaService service;
+public class PetController {
+    private final PetService service;
     private final RequestDtoValidator requestValidator;
 
     public PetPostResponse save(String name, PetType petType, PetSex petSex, String street, String number,

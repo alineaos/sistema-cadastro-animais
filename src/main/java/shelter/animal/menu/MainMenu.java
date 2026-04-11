@@ -14,7 +14,7 @@ import java.util.Scanner;
 @RequiredArgsConstructor
 @Component
 @Log4j2
-public class MainMenuJpa implements CommandLineRunner {
+public class MainMenu implements CommandLineRunner {
     private final Scanner scanner;
     private final InputValidator validator;
     private final PetMenu petMenu;
