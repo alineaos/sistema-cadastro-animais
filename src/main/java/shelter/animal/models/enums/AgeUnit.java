@@ -1,7 +1,9 @@
 package shelter.animal.models.enums;
 
+import lombok.Getter;
 import shelter.animal.exceptions.BusinessException;
 
+@Getter
 public enum AgeUnit {
     YEARS(1, "anos"),
     MONTH(2, "meses");
@@ -12,14 +14,6 @@ public enum AgeUnit {
     AgeUnit(int code, String label) {
         this.code = code;
         this.label = label;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public String getLabel() {
-        return label;
     }
 
     public static AgeUnit selectByCode(int codeInput){

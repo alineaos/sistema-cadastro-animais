@@ -1,7 +1,9 @@
 package shelter.animal.models.enums;
 
+import lombok.Getter;
 import shelter.animal.exceptions.BusinessException;
 
+@Getter
 public enum PetSex {
     FEMALE(1, 'F', "Fêmea"),
     MALE(2, 'M', "Macho");
@@ -14,18 +16,6 @@ public enum PetSex {
         this.code = code;
         this.abbreviation = abbreviation;
         this.classification = classification;
-    }
-
-    public char getAbbreviation() {
-        return abbreviation;
-    }
-
-    public String getClassification() {
-        return classification;
-    }
-
-    public int getCode() {
-        return code;
     }
 
     public static PetSex selectByCode(int codeInput){

@@ -1,7 +1,9 @@
 package shelter.animal.models.enums;
 
+import lombok.Getter;
 import shelter.animal.exceptions.BusinessException;
 
+@Getter
 public enum PetType {
     CAT(1, "Gato"),
     DOG(2, "Cachorro");
@@ -12,14 +14,6 @@ public enum PetType {
     PetType(int code, String label) {
         this.code = code;
         this.label = label;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public String getLabel() {
-        return label;
     }
 
     public static PetType selectByCode(int codeInput){
