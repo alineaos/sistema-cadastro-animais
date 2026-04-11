@@ -18,7 +18,6 @@ public class MainMenuJpa implements CommandLineRunner {
     private final Scanner scanner;
     private final InputValidator validator;
     private final PetMenu petMenu;
-    private final MainMenuLegacy mainMenuLegacy;
 
     @Override
     public void run(String... args){
@@ -29,8 +28,7 @@ public class MainMenuJpa implements CommandLineRunner {
                 System.out.println("*         MENU PRINCIPAL         *");
                 System.out.println("**********************************\n");
                 System.out.println("Escolha uma opção:");
-                System.out.println("[1] Gerenciar Animais (Versão 2.0, em desenvolvimento)");
-                System.out.println("[2] Gerenciar Animais (Versão 1.0)");
+                System.out.println("[1] Gerenciar Animais");
                 System.out.println("[0] Encerrar o programa");
                 System.out.print("Opção: ");
 
@@ -40,7 +38,6 @@ public class MainMenuJpa implements CommandLineRunner {
 
                 switch (option) {
                     case 1 -> petMenu.runPetMenu();
-                    case 2 -> mainMenuLegacy.runHomeMenu();
                     default -> System.out.println("Opção inválida");
                 }
             } catch (BusinessException | NotFoundException e) {
