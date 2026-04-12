@@ -1,7 +1,8 @@
 package shelter.animal.menu;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import shelter.animal.exceptions.BusinessException;
@@ -13,8 +14,9 @@ import java.util.Scanner;
 
 @RequiredArgsConstructor
 @Component
-@Log4j2
 public class MainMenu implements CommandLineRunner {
+    private static final Logger log = LoggerFactory.getLogger(MainMenu.class);
+
     private final Scanner scanner;
     private final InputValidator validator;
     private final PetMenu petMenu;
@@ -45,8 +47,7 @@ public class MainMenu implements CommandLineRunner {
                 System.out.println("Aviso: " + e.getMessage());
             } catch (InvalidRequestException e){
                 e.getConstraintViolations().forEach(constraint ->
-                        log.warn("{} {}", e.getMessage(), constraint.getMessageTemplate()));
-
+                        log.info("{} {}", e.getMessage(), constraint.getMessageTemplate()));
                 System.out.print("Dados inválidos:");
                 e.getConstraintViolations()
                         .forEach(constraint -> System.out.printf(" '%s' ", constraint.getMessageTemplate()));

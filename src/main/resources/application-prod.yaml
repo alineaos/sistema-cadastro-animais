@@ -15,7 +15,8 @@ spring:
     banner-mode: "off"
 logging:
   level:
+    root: info
     org.springframework: error
-    org.hibernate: error
-    com.zaxxer.hikari: error
-    shelter.animal: error
+    org.hibernate: warn
+    com.zaxxer.hikari: warn
+    shelter.animal: warn
