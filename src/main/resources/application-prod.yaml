@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: animal-shelter
+  datasource:
+    url: jdbc:mysql://mysql:3306/animal_shelter?useTimezone=true&serverTimezone=UTC&createDatabaseIfNotExist=true
+    username: ${ENV_ROOT_USER:root}
+    password: ${ENV_ROOT_PASSWORD:root}
+    hikari:
+      initialization-fail-timeout: 60000
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: validate
+  main:
+    banner-mode: "off"
+logging:
+  level:
+    org.springframework: error
+    org.hibernate: error
+    com.zaxxer.hikari: error
+    shelter.animal: error
