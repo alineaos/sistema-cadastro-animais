@@ -391,6 +391,7 @@ public class AnimalMenu {
         getResponses.forEach(
                 p -> {
                     String formattedAge = ageFormatter(p.age(), p.ageUnit());
+                    String formattedWeight = weightFormatter(p.weight());
 
                     System.out.printf(tablePattern,
                             p.id(),
@@ -399,7 +400,7 @@ public class AnimalMenu {
                             p.sex().getAbbreviation(),
                             p.address(),
                             formattedAge,
-                            p.weight() == null ? AppConstants.NAO_INFORMADO : p.weight() + "kg",
+                            formattedWeight,
                             p.breed(),
                             dateFormatter(p.createdAt()));
                 });
@@ -415,6 +416,14 @@ public class AnimalMenu {
             return AppConstants.NAO_INFORMADO;
         } else {
             return age + " " + ageUnit.getLabel();
+        }
+    }
+
+    private String weightFormatter(Double weight) {
+        if (weight == null) {
+            return AppConstants.NAO_INFORMADO;
+        } else {
+            return weight + "kg";
         }
     }
 
