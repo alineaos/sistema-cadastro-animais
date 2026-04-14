@@ -10,7 +10,7 @@
 ## ℹ️ Sobre o Projeto
 Aplicação desenvolvida com Spring Boot para gerenciar os cadastro de animais de um abrigo. Para criar um cadastro é preciso preencher o formulário (nome, tipo, sexo, endereço onde foi encontrado, idade, peso e raça).
 
-O sistema utiliza o Spring Data JPA para implementar as funcionalidades CRUD no banco de dados MySQL, armazenando os dados dos animais. A interface foi projetada para funcionar via  CLI (Interface de Linha de Comando) através de um menu interativo.
+O sistema utiliza o Spring Data JPA para implementar as funcionalidades CRUD no banco de dados MySQL, armazenando os dados dos animais. A interface foi projetada para funcionar via CLI (Interface de Linha de Comando) através de um menu interativo.
 
 O Docker cria um container da aplicação, permitindo a sua execução mesmo em máquinas que não possuam Java e/ou MySQL instalados.
 
@@ -27,26 +27,65 @@ O Docker cria um container da aplicação, permitindo a sua execução mesmo em 
 - Excluir um cadastro
 
 ### 📄 Formulário de cadastro
-| Campo                |          Descriçao           | Exemplo                 | 
+| Campo                |          Descrição           | Exemplo                 | 
 |:---------------------|:----------------------------:|:------------------------|
 | **Nome**             |        Nome do animal        | Caramelo                |
 | **Tipo**             |       Gato ou Cachorro       | Cachorro                |
-| **Sexo**             |        Sexo do animal        | M (Macho)               |
-| **Endereço**         | Onde o animal foi encontrado | Rua abc, 123, São Paulo |
+| **Sexo**             |        Sexo do animal        | M                       |
+| **Endereço**         | Onde o animal foi encontrado | Rua Abc, 123, São Paulo |
 | **Idade**            |   Valor da idade estimada    | 4                       |
 | **Unidade da Idade** |    Idade em meses ou anos    | anos                    |
 | **Peso**             |          Peso em kg          | 9.8                     |
 | **Raça**             |      Raça predominante       | SRD                     |
 
 ### 🗃️ Arquitetura do banco de dados
-![WIP](https://img.shields.io/badge/status-em%20constru%C3%A7%C3%A3o-lightgrey?style=flat-square)
-
-(Essa seção será atualizada com um exemplo da estrutura do banco de dados assim que a versão 2.0 estiver pronta)
+```mermaid
+erDiagram
+ANIMAL {
+bigint id PK
+varchar address_info
+int age_value
+varchar age_unit
+varchar breed
+datetime created_at
+varchar name
+char sex
+varchar type
+double weight
+}
+```
 
 ### 📂 Estrutura do Projeto
-![WIP](https://img.shields.io/badge/status-em%20constru%C3%A7%C3%A3o-lightgrey?style=flat-square)
-
-(Essa seção será atualizada com a estrutura do projeto assim que a versão 2.0 estiver pronta)
+```text
+.
+├── init
+├── logs
+├── src/
+│   └── main/
+│       ├── java/
+│       │   └── shelter/
+│       │       └── animal/
+│       │           ├── config/         # Classes de configurações
+│       │           ├── controller/     # Valida requisições e envia para o Service
+│       │           ├── dto/            # Objetos de transferência de dados (Request/Response)
+│       │           ├── exceptions/     # Exceções do Sistema
+│       │           ├── mapper/         # Mappers
+│       │           ├── menu/           # Menus da aplicação
+│       │           ├── models/         # Entidades JPA e Enumerações
+│       │           ├── repository/     # Comunicação com o banco de dados
+│       │           ├── service/        # Aplica regra de negócios e envia para o Repository
+│       │           ├── utils/          # Classes utilitárias
+│       │           └── Main.java       # Inicialização da aplicação
+│       └── resources/                  # Arquivos de configuração dos perfis e logs
+├── compose.yaml                        # Organização dos containers
+├── Dockerfile                          # Criação da imagem da aplicação
+├── entrypoint.sh                       # Script: Limpa o terminal e inicia a aplicação
+├── pom.xml                             # Dependências do Maven
+├── .envTemplate                        # Template das variáveis de ambiente
+├── .dockerignore                       # Exclusão de arquivos desnecessários na imagem Docker
+├── .gitignore
+└── README.md
+```
 
 ### 🛠️ Tecnologias e ferramentas
 **Linguagem:** Java 21
@@ -55,7 +94,7 @@ O Docker cria um container da aplicação, permitindo a sua execução mesmo em 
 
 **Persistência:** Spring Data JPA / Hibernate
 
-**Banco de dados:** MySQL 9
+**Banco de dados:** MySQL 8
 
 **Infraestrutura:** Docker & Docker Compose
 
@@ -79,12 +118,12 @@ cd sistema-cadastro-animais
 
 3. **Construa a imagem da aplicação**
 ```
-docker-compose build
+docker compose build
 ```
 
 4. **Execute a aplicação**
 ```
-docker-compose run --rm app
+docker compose run --rm app
 ```
 ```--rm``` permite o uso do CLI da aplicação
 
