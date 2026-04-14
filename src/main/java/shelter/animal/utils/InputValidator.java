@@ -11,7 +11,11 @@ import java.time.format.DateTimeParseException;
 public class InputValidator {
     public Integer parseInteger(String input) {
         try {
-            return Integer.parseInt(input);
+            Integer formattedInput = Integer.parseInt(input);
+            if (formattedInput < 0){
+                throw new BusinessException("'%d' é um número negativo.".formatted(formattedInput));
+            }
+            return formattedInput;
         } catch (NumberFormatException e){
             throw new BusinessException("'%s' não é um número inteiro.".formatted(input));
         }
@@ -19,7 +23,11 @@ public class InputValidator {
 
     public Double parseDouble(String input) {
         try {
-            return Double.parseDouble(input);
+            Double formattedInput = Double.parseDouble(input);
+            if (formattedInput < 0.0){
+                throw new BusinessException("'%f' é um número negativo.".formatted(formattedInput));
+            }
+            return formattedInput;
         } catch (NumberFormatException e){
             throw new BusinessException("'%s' não é um número.".formatted(input));
         }
