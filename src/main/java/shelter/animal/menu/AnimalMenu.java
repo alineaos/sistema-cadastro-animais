@@ -58,7 +58,7 @@ public class AnimalMenu {
         System.out.println("**************************");
         System.out.println("Escolha uma opção: ");
         System.out.println("[1] Cadastrar um novo animal");
-        System.out.println("[2] Listar todos os animals cadastrados");
+        System.out.println("[2] Listar todos os animais cadastrados");
         System.out.println("[3] Listar animal por ID");
         System.out.println("[4] Listar por critérios");
         System.out.println("[5] Deletar cadastro");
