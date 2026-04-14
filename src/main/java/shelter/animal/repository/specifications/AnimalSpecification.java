@@ -35,17 +35,32 @@ public class AnimalSpecification {
 
     public static Specification<Animal> hasAge(Integer age, AgeUnit ageUnit) {
         return (root, query, cb) -> {
-            if (age == null || ageUnit == null) return null;
+            if (age == null && ageUnit == null) return null;
+
+            if (Integer.valueOf(0).equals(age)) {
+                return cb.and(
+                        cb.isNull(root.get("age")));
+            }
 
             return cb.and(
                     cb.equal(root.get("age"), age),
                     cb.equal(root.get("ageUnit"), ageUnit));
+
         };
     }
 
     public static Specification<Animal> hasWeight(Double weight) {
-        return (root, query, cb) ->
-                weight == null ? null : cb.equal(root.get("weight"), weight);
+        return (root, query, cb) -> {
+            if (weight == null) return null;
+
+            if (weight == 0) {
+                return cb.and(
+                        cb.isNull(root.get("weight")));
+            } else {
+                return cb.and(
+                        cb.equal(root.get("weight"), weight));
+            }
+        };
 
     }
 
@@ -54,8 +69,8 @@ public class AnimalSpecification {
                 breed == null ? null : cb.like(root.get("breed"), "%" + breed.toLowerCase() + "%");
     }
 
-    public static Specification<Animal> hasCreatedAt(LocalDate createdAt){
-        return (root, query, cb) ->{
+    public static Specification<Animal> hasCreatedAt(LocalDate createdAt) {
+        return (root, query, cb) -> {
             if (createdAt == null) return null;
 
             LocalDateTime startOfDay = createdAt.atStartOfDay();

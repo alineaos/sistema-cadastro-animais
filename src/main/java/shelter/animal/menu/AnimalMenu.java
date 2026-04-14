@@ -149,13 +149,15 @@ public class AnimalMenu {
                 case 3 -> filters.put("sex", runAnimalSexMenu());
 
                 case 4 -> {
-                    System.out.print("\nDigite a idade: ");
-                    filters.put("age", validator.parseDouble(scanner.nextLine()));
-                    filters.put("ageUnit", runAgeUnitMenu());
+                    System.out.print("\nDigite a idade ou digite 0 para buscar por 'Não informado': ");
+                    filters.put("age", validator.parseInteger(scanner.nextLine()));
+                    if (filters.get("age") != null && (Integer) filters.get("age") != 0) {
+                        filters.put("ageUnit", runAgeUnitMenu());
+                    }
                 }
 
                 case 5 -> {
-                    System.out.print("\nDigite o peso: ");
+                    System.out.print("\nDigite o peso ou digite 0 para buscar por 'Não informado': ");
                     filters.put("weight", validator.parseDouble(scanner.nextLine()));
                 }
 
