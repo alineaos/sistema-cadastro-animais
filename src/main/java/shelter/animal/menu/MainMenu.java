@@ -36,7 +36,11 @@ public class MainMenu implements CommandLineRunner {
 
                 int option = validator.parseInteger(scanner.nextLine());
 
-                if (option == 0) return;
+                if (option == 0) {
+                    System.out.println("Sistema encerrado.");
+                    return;
+                }
+
 
                 switch (option) {
                     case 1 -> animalMenu.runAnimalMenu();
