@@ -27,7 +27,7 @@ public class AnimalController {
     private final RequestDtoValidator requestValidator;
 
     public AnimalPostResponse save(String name, AnimalType animalType, AnimalSex animalSex, String street, String number,
-                                   String city, Double age, AgeUnit ageUnit, Double weight, String breed) {
+                                   String city, Integer age, AgeUnit ageUnit, Double weight, String breed) {
         AddressPostRequest addressPostRequest = AddressPostRequest.builder()
                 .street(street)
                 .number(number)
@@ -75,7 +75,7 @@ public class AnimalController {
                 .type((AnimalType) params.get("type"))
                 .sex((AnimalSex) params.get("sex"))
                 .address(addressFilter)
-                .age((Double) params.get("age"))
+                .age((Integer) params.get("age"))
                 .ageUnit((AgeUnit) params.get("ageUnit"))
                 .weight((Double) params.get("weight"))
                 .breed((String) params.get("breed"))
@@ -90,7 +90,7 @@ public class AnimalController {
     }
 
     public void update(Long id, String name, String street, String number, String city,
-                       Double age, AgeUnit ageUnit, Double weight, String breed) {
+                       Integer age, AgeUnit ageUnit, Double weight, String breed) {
 
 
         AddressPatchRequest addressPatchRequest = AddressPatchRequest.builder()

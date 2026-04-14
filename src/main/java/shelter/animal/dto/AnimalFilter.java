@@ -13,7 +13,7 @@ public record AnimalFilter(
         AnimalType type,
         AnimalSex sex,
         AddressFilter address,
-        Double age,
+        Integer age,
         AgeUnit ageUnit,
         Double weight,
         String breed,

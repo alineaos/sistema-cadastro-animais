@@ -33,7 +33,7 @@ public class AnimalSpecification {
                 address == null ? null : cb.equal(root.get("address"), address);
     }
 
-    public static Specification<Animal> hasAge(Double age, AgeUnit ageUnit) {
+    public static Specification<Animal> hasAge(Integer age, AgeUnit ageUnit) {
         return (root, query, cb) -> {
             if (age == null || ageUnit == null) return null;
 

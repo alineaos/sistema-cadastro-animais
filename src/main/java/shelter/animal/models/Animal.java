@@ -21,9 +21,10 @@ import shelter.animal.models.enums.AnimalSex;
 import shelter.animal.models.enums.AnimalType;
 import shelter.animal.repository.converters.AddressConverter;
 import shelter.animal.repository.converters.AgeUnitConverter;
-import shelter.animal.repository.converters.NumberConverter;
+import shelter.animal.repository.converters.WeightConverter;
 import shelter.animal.repository.converters.AnimalSexConverter;
 import shelter.animal.repository.converters.AnimalTypeConverter;
+import shelter.animal.repository.converters.AgeConverter;
 
 import java.time.LocalDateTime;
 
@@ -57,15 +58,15 @@ public class Animal {
     @Column(name = "address_info", nullable = false)
     private Address address;
 
-    @Convert(converter = NumberConverter.class)
+    @Convert(converter = AgeConverter.class)
     @Column(name = "age_value")
-    private Double age;
+    private Integer age;
 
     @Convert(converter = AgeUnitConverter.class)
     @Column(name = "age_unit")
     private AgeUnit ageUnit;
 
-    @Convert(converter = NumberConverter.class)
+    @Convert(converter = WeightConverter.class)
     @Column
     private Double weight;
 

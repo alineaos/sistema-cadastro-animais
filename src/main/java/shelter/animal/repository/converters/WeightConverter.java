@@ -3,7 +3,7 @@ package shelter.animal.repository.converters;
 import jakarta.persistence.AttributeConverter;
 import shelter.animal.utils.AppConstants;
 
-public class NumberConverter implements AttributeConverter<Double, String> {
+public class WeightConverter implements AttributeConverter<Double, String> {
 
     @Override
     public String convertToDatabaseColumn(Double value) {

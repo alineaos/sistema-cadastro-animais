@@ -22,7 +22,7 @@ public record AnimalPostRequest(
         @NotNull(message = "O endereço é obrigatório")
         AddressPostRequest address,
         @Positive(message = "A idade precisa ser um valor maior que 0")
-        Double age,
+        Integer age,
         AgeUnit ageUnit,
         @DecimalMin(value = "0.5", message = "O peso não pode ser menor que 0.5kg")
         @DecimalMax(value = "60.0", message = "O peso não pode ser maior que 60kg")

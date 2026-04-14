@@ -92,7 +92,7 @@ public class AnimalMenu {
         String city = parseTextInputNonBlank("O nome da cidade não pode estar em branco. Digite novamente: ");
 
         System.out.print("\nIdade aproximada do animal: ");
-        Double age = parseNullableDouble();
+        Integer age = parseNullableInteger();
 
         AgeUnit ageUnit = null;
         if (age != null) ageUnit = runAgeUnitMenu();
@@ -227,7 +227,7 @@ public class AnimalMenu {
 
         System.out.printf("Idade atual: %s %s\n", animalFromDb.age(), animalFromDb.ageUnit().getLabel());
         System.out.print("Digite a nova idade ou enter para manter a atual: ");
-        Double newAge = parseNullableDouble();
+        Integer newAge = parseNullableInteger();
 
         AgeUnit newAgeUnit = null;
         if (newAge != null) newAgeUnit = runAgeUnitMenu();
@@ -326,6 +326,14 @@ public class AnimalMenu {
         return input;
     }
 
+    private Integer parseNullableInteger() {
+        String numberInput = scanner.nextLine();
+        if (numberInput.isEmpty()) {
+            return null;
+        }
+        return validator.parseInteger(numberInput);
+    }
+
     private Double parseNullableDouble() {
         String numberInput = scanner.nextLine();
         if (numberInput.isEmpty()) {
@@ -402,7 +410,7 @@ public class AnimalMenu {
         return formatter.format(createdAt);
     }
 
-    private String ageFormatter(Double age, AgeUnit ageUnit) {
+    private String ageFormatter(Integer age, AgeUnit ageUnit) {
         if (age == null && ageUnit == null) {
             return AppConstants.NAO_INFORMADO;
         } else {

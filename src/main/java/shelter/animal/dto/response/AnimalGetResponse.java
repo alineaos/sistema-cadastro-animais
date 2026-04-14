@@ -12,7 +12,7 @@ public record AnimalGetResponse(
         AnimalType type,
         AnimalSex sex,
         AddressGetResponse address,
-        Double age,
+        Integer age,
         AgeUnit ageUnit,
         Double weight,
         String breed,
