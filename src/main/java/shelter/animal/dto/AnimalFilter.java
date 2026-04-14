@@ -2,16 +2,16 @@ package shelter.animal.dto;
 
 import lombok.Builder;
 import shelter.animal.models.enums.AgeUnit;
-import shelter.animal.models.enums.PetSex;
-import shelter.animal.models.enums.PetType;
+import shelter.animal.models.enums.AnimalSex;
+import shelter.animal.models.enums.AnimalType;
 
 import java.time.LocalDate;
 
 @Builder
-public record PetFilter(
+public record AnimalFilter(
         String name,
-        PetType type,
-        PetSex sex,
+        AnimalType type,
+        AnimalSex sex,
         AddressFilter address,
         Double age,
         AgeUnit ageUnit,

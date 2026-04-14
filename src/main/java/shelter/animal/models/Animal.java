@@ -17,13 +17,13 @@ import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import shelter.animal.models.enums.AgeUnit;
-import shelter.animal.models.enums.PetSex;
-import shelter.animal.models.enums.PetType;
+import shelter.animal.models.enums.AnimalSex;
+import shelter.animal.models.enums.AnimalType;
 import shelter.animal.repository.converters.AddressConverter;
 import shelter.animal.repository.converters.AgeUnitConverter;
 import shelter.animal.repository.converters.NumberConverter;
-import shelter.animal.repository.converters.PetSexConverter;
-import shelter.animal.repository.converters.PetTypeConverter;
+import shelter.animal.repository.converters.AnimalSexConverter;
+import shelter.animal.repository.converters.AnimalTypeConverter;
 
 import java.time.LocalDateTime;
 
@@ -36,7 +36,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Pet {
+public class Animal {
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,13 +45,13 @@ public class Pet {
     @Column(nullable = false)
     private String name;
 
-    @Convert(converter = PetTypeConverter.class)
+    @Convert(converter = AnimalTypeConverter.class)
     @Column(nullable = false)
-    private PetType type;
+    private AnimalType type;
 
-    @Convert(converter = PetSexConverter.class)
+    @Convert(converter = AnimalSexConverter.class)
     @Column(nullable = false)
-    private PetSex sex;
+    private AnimalSex sex;
 
     @Convert(converter = AddressConverter.class)
     @Column(name = "address_info", nullable = false)

@@ -4,7 +4,7 @@ import lombok.Getter;
 import shelter.animal.exceptions.BusinessException;
 
 @Getter
-public enum PetSex {
+public enum AnimalSex {
     FEMALE(1, 'F', "Fêmea"),
     MALE(2, 'M', "Macho");
 
@@ -12,14 +12,14 @@ public enum PetSex {
     private final char abbreviation;
     private final String classification;
 
-    PetSex(int code, char abbreviation, String classification) {
+    AnimalSex(int code, char abbreviation, String classification) {
         this.code = code;
         this.abbreviation = abbreviation;
         this.classification = classification;
     }
 
-    public static PetSex selectByCode(int codeInput){
-        for (PetSex sex : PetSex.values()){
+    public static AnimalSex selectByCode(int codeInput){
+        for (AnimalSex sex : AnimalSex.values()){
             if(codeInput == sex.getCode()){
                 return sex;
             }
@@ -27,10 +27,10 @@ public enum PetSex {
         throw new BusinessException("O código [%d] não existe.".formatted(codeInput));
     }
 
-    public static PetSex selectSex(char abbreviationOption){
-        for (PetSex petSex : PetSex.values()){
-            if(petSex.abbreviation == abbreviationOption){
-                return petSex;
+    public static AnimalSex selectSex(char abbreviationOption){
+        for (AnimalSex animalSex : AnimalSex.values()){
+            if(animalSex.abbreviation == abbreviationOption){
+                return animalSex;
             }
         }
         throw new BusinessException("Opção inválida.");

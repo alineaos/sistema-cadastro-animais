@@ -6,18 +6,18 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
 import shelter.animal.models.enums.AgeUnit;
-import shelter.animal.models.enums.PetSex;
-import shelter.animal.models.enums.PetType;
+import shelter.animal.models.enums.AnimalSex;
+import shelter.animal.models.enums.AnimalType;
 
 @Builder
-public record PetPostRequest(
+public record AnimalPostRequest(
         @Pattern(regexp = "[a-zA-ZÀ-ÃÉÊÍÓ-ÕÚÇà-ãéêíó-õúç\\s]*"
                 , message = "O nome deve conter apenas letras.")
         String name,
         @NotNull(message = "O tipo do animal é obrigatório")
-        PetType type,
+        AnimalType type,
         @NotNull(message = "O sexo do animal é obrigatório")
-        PetSex sex,
+        AnimalSex sex,
         @NotNull(message = "O endereço é obrigatório")
         AddressPostRequest address,
         Double age,

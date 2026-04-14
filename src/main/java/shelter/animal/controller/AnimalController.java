@@ -3,17 +3,17 @@ package shelter.animal.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import shelter.animal.dto.AddressFilter;
-import shelter.animal.dto.PetFilter;
+import shelter.animal.dto.AnimalFilter;
 import shelter.animal.dto.request.AddressPatchRequest;
 import shelter.animal.dto.request.AddressPostRequest;
-import shelter.animal.dto.request.PetPatchRequest;
-import shelter.animal.dto.request.PetPostRequest;
-import shelter.animal.dto.response.PetGetResponse;
-import shelter.animal.dto.response.PetPostResponse;
+import shelter.animal.dto.request.AnimalPatchRequest;
+import shelter.animal.dto.request.AnimalPostRequest;
+import shelter.animal.dto.response.AnimalGetResponse;
+import shelter.animal.dto.response.AnimalPostResponse;
 import shelter.animal.models.enums.AgeUnit;
-import shelter.animal.models.enums.PetSex;
-import shelter.animal.models.enums.PetType;
-import shelter.animal.service.PetService;
+import shelter.animal.models.enums.AnimalSex;
+import shelter.animal.models.enums.AnimalType;
+import shelter.animal.service.AnimalService;
 import shelter.animal.utils.RequestDtoValidator;
 
 import java.time.LocalDate;
@@ -22,22 +22,22 @@ import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
-public class PetController {
-    private final PetService service;
+public class AnimalController {
+    private final AnimalService service;
     private final RequestDtoValidator requestValidator;
 
-    public PetPostResponse save(String name, PetType petType, PetSex petSex, String street, String number,
-                                String city, Double age, AgeUnit ageUnit, Double weight, String breed) {
+    public AnimalPostResponse save(String name, AnimalType animalType, AnimalSex animalSex, String street, String number,
+                                   String city, Double age, AgeUnit ageUnit, Double weight, String breed) {
         AddressPostRequest addressPostRequest = AddressPostRequest.builder()
                 .street(street)
                 .number(number)
                 .city(city)
                 .build();
 
-        PetPostRequest petPostRequest = PetPostRequest.builder()
+        AnimalPostRequest animalPostRequest = AnimalPostRequest.builder()
                 .name(name)
-                .type(petType)
-                .sex(petSex)
+                .type(animalType)
+                .sex(animalSex)
                 .address(addressPostRequest)
                 .age(age)
                 .ageUnit(ageUnit)
@@ -45,21 +45,21 @@ public class PetController {
                 .breed(breed)
                 .build();
 
-        requestValidator.validateRequest(petPostRequest);
+        requestValidator.validateRequest(animalPostRequest);
 
-        return service.save(petPostRequest);
+        return service.save(animalPostRequest);
 
     }
 
-    public List<PetGetResponse> findAll() {
+    public List<AnimalGetResponse> findAll() {
         return service.findAll();
     }
 
-    public PetGetResponse findById(Long id) {
+    public AnimalGetResponse findById(Long id) {
         return service.findByIdOrThrowNotFound(id);
     }
 
-    public List<PetGetResponse> findByCriteria(Map<String, Object> params) {
+    public List<AnimalGetResponse> findByCriteria(Map<String, Object> params) {
 
         AddressFilter addressFilter = null;
         if (params.containsKey("city")) {
@@ -70,10 +70,10 @@ public class PetController {
                     .build();
         }
 
-        PetFilter petFilter = PetFilter.builder()
+        AnimalFilter animalFilter = AnimalFilter.builder()
                 .name((String) params.get("name"))
-                .type((PetType) params.get("type"))
-                .sex((PetSex) params.get("sex"))
+                .type((AnimalType) params.get("type"))
+                .sex((AnimalSex) params.get("sex"))
                 .address(addressFilter)
                 .age((Double) params.get("age"))
                 .ageUnit((AgeUnit) params.get("ageUnit"))
@@ -82,7 +82,7 @@ public class PetController {
                 .createdAt((LocalDate) params.get("createdAt"))
                 .build();
 
-        return service.findByCriteria(petFilter);
+        return service.findByCriteria(animalFilter);
     }
 
     public void delete(Long id) {
@@ -99,7 +99,7 @@ public class PetController {
                 .city(city)
                 .build();
 
-        PetPatchRequest petPatchRequest = PetPatchRequest.builder()
+        AnimalPatchRequest animalPatchRequest = AnimalPatchRequest.builder()
                 .name(name)
                 .address(addressPatchRequest)
                 .age(age)
@@ -108,8 +108,8 @@ public class PetController {
                 .breed(breed)
                 .build();
 
-        requestValidator.validateRequest(petPatchRequest);
+        requestValidator.validateRequest(animalPatchRequest);
 
-        service.update(id, petPatchRequest);
+        service.update(id, animalPatchRequest);
     }
 }

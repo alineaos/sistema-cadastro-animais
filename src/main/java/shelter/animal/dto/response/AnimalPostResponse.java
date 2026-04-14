@@ -1,6 +1,6 @@
 package shelter.animal.dto.response;
 
-public record PetPostResponse(
+public record AnimalPostResponse(
         Long id,
         String name
 ) {}

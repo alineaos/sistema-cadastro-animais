@@ -19,7 +19,7 @@ public class MainMenu implements CommandLineRunner {
 
     private final Scanner scanner;
     private final InputValidator validator;
-    private final PetMenu petMenu;
+    private final AnimalMenu animalMenu;
 
     @Override
     public void run(String... args){
@@ -39,7 +39,7 @@ public class MainMenu implements CommandLineRunner {
                 if (option == 0) return;
 
                 switch (option) {
-                    case 1 -> petMenu.runPetMenu();
+                    case 1 -> animalMenu.runAnimalMenu();
                     default -> System.out.println("Opção inválida");
                 }
             } catch (BusinessException | NotFoundException e) {

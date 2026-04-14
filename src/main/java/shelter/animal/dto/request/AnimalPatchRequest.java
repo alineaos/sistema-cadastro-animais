@@ -7,7 +7,7 @@ import lombok.Builder;
 import shelter.animal.models.enums.AgeUnit;
 
 @Builder
-public record PetPatchRequest (
+public record AnimalPatchRequest(
         @Pattern(regexp = "[a-zA-ZÀ-ÃÉÊÍÓ-ÕÚÇà-ãéêíó-õúç\\s]*"
                 , message = "O nome deve conter apenas letras.")
         String name,
