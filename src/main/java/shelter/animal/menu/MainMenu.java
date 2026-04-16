@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import shelter.animal.exceptions.BusinessException;
 import shelter.animal.exceptions.InvalidRequestException;
 import shelter.animal.exceptions.NotFoundException;
+import shelter.animal.utils.ConsoleUtils;
 import shelter.animal.utils.InputValidator;
 
 import java.util.Scanner;
@@ -18,14 +19,17 @@ public class MainMenu implements CommandLineRunner {
     private static final Logger log = LoggerFactory.getLogger(MainMenu.class);
 
     private final Scanner scanner;
+    private final ConsoleUtils console;
     private final InputValidator validator;
     private final AnimalMenu animalMenu;
 
     @Override
     public void run(String... args){
         do {
+            console.clear();
             try {
-                System.out.println("\n**********************************");
+                System.out.println();
+                System.out.println("**********************************");
                 System.out.println("* SISTEMA DE CADASTRO DE ANIMAIS *");
                 System.out.println("*         MENU PRINCIPAL         *");
                 System.out.println("**********************************\n");
@@ -43,7 +47,10 @@ public class MainMenu implements CommandLineRunner {
 
 
                 switch (option) {
-                    case 1 -> animalMenu.runAnimalMenu();
+                    case 1 -> {
+                        console.clear();
+                        animalMenu.runAnimalMenu();
+                    }
                     default -> System.out.println("Opção inválida");
                 }
             } catch (BusinessException | NotFoundException e) {

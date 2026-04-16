@@ -9,6 +9,7 @@ import shelter.animal.models.enums.AgeUnit;
 import shelter.animal.models.enums.AnimalSex;
 import shelter.animal.models.enums.AnimalType;
 import shelter.animal.utils.AppConstants;
+import shelter.animal.utils.ConsoleUtils;
 import shelter.animal.utils.InputValidator;
 
 import java.time.LocalDateTime;
@@ -25,6 +26,7 @@ import java.util.regex.Pattern;
 @RequiredArgsConstructor
 public class AnimalMenu {
     private final Scanner scanner;
+    private final ConsoleUtils console;
     private final InputValidator validator;
     private final AnimalController controller;
 
@@ -42,17 +44,36 @@ public class AnimalMenu {
 
     private void processingAnimalMenuOption(int option) {
         switch (option) {
-            case 1 -> handleSave();
-            case 2 -> handleFindAll();
-            case 3 -> handleFindById();
-            case 4 -> handleFindByCriteria();
-            case 5 -> handleDelete();
-            case 6 -> handleUpdate();
+            case 1 -> {
+                console.clear();
+                handleSave();
+            }
+            case 2 -> {
+                console.clear();
+                handleFindAll();
+            }
+            case 3 -> {
+                console.clear();
+                handleFindById();
+            }
+            case 4 -> {
+                console.clear();
+                handleFindByCriteria();
+            }
+            case 5 -> {
+                console.clear();
+                handleDelete();
+            }
+            case 6 -> {
+                console.clear();
+                handleUpdate();
+            }
             default -> throw new IllegalArgumentException("Opção inválida.");
         }
     }
 
     private void showAnimalMenu() {
+        System.out.println();
         System.out.println("**************************");
         System.out.println("* GERENCIADOR DE ANIMAIS *");
         System.out.println("**************************");
