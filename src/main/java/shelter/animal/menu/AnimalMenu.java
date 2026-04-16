@@ -218,9 +218,14 @@ public class AnimalMenu {
     }
 
     private void handleDelete(){
-        System.out.println("Digite o ID do cadastro a ser deletado. ");
+        System.out.println("Digite o ID do cadastro a ser deletado ou 0 para cancelar. ");
         System.out.print("ID: ");
         Long id = validator.parseLong(scanner.nextLine());
+
+        if (id == 0) return;
+
+        System.out.printf("ID selecionado: %d\n", id);
+        if(!confirmAction("Atenção: Você tem certeza que deseja deletar o cadastro selecionado? Essa ação é irreversível.")) return;
 
         controller.delete(id);
         System.out.println("Cadastro deletado com sucesso.");
@@ -391,6 +396,25 @@ public class AnimalMenu {
             case 8 -> filters.containsKey("createdAt");
             default -> false;
         };
+    }
+
+    private boolean confirmAction(String text){
+            System.out.println(text);
+        while(true){
+            System.out.println("[1] Confirmar");
+            System.out.println("[2] Cancelar");
+            System.out.print("Opção: ");
+            Integer input = validator.parseInteger(scanner.nextLine());
+
+            if (input == 1) {
+                return true;
+            } else if (input == 2) {
+                System.out.println("Ação cancelada pelo usuário.");
+                return false;
+            } else {
+                System.out.println("Opção inválida. Digite novamente");
+            }
+        }
     }
 //endregion
 
