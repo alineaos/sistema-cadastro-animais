@@ -56,12 +56,14 @@ public class MainMenu implements CommandLineRunner {
             } catch (BusinessException | NotFoundException e) {
                 log.warn("Aviso: {}", e.getMessage());
                 System.out.println("Aviso: " + e.getMessage());
+                console.sleep(2);
             } catch (InvalidRequestException e){
                 e.getConstraintViolations().forEach(constraint ->
                         log.info("{} {}", e.getMessage(), constraint.getMessageTemplate()));
                 System.out.print("Dados inválidos:");
                 e.getConstraintViolations()
                         .forEach(constraint -> System.out.printf(" '%s' ", constraint.getMessageTemplate()));
+                console.sleep(3);
             }
         }while (true);
     }
