@@ -131,6 +131,7 @@ public class AnimalMenu {
     }
 
     private void handleFindAll() {
+        System.out.println("Listando todos os animais cadastrados...");
         List<AnimalGetResponse> getResponses = controller.findAll();
         printAnimalTable(getResponses);
     }
@@ -212,6 +213,7 @@ public class AnimalMenu {
 
         List<AnimalGetResponse> getResponses = controller.findByCriteria(filters);
 
+        System.out.println("Buscando cadastros...");
         printAnimalTable(getResponses);
     }
 
@@ -398,7 +400,7 @@ public class AnimalMenu {
 // ========================================================================================================
     private void printAnimalTable(List<AnimalGetResponse> getResponses) {
         if (getResponses.isEmpty()) {
-            System.out.println("Lista vazia. Nenhum animal para exibir.");
+            System.out.println("Nenhum registro encontrado.");
             return;
         }
 
