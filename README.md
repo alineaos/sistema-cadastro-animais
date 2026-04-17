@@ -28,9 +28,7 @@ instalados.
 
 ### 🎬 Demonstração
 
-![WIP](https://img.shields.io/badge/status-em%20constru%C3%A7%C3%A3o-lightgrey?style=flat-square)
-
-(Essa seção será atualizada com uma demonstração do menu assim que a versão 2.0 estiver pronta)
+![Demonstração da Aplicação](./assets/animal-shelter-demo.gif)
 
 ### ✨ Funcionalidades do Sistema
 
@@ -51,6 +49,10 @@ instalados.
 | **Unidade da Idade** |    Idade em meses ou anos    | anos                    |
 | **Peso**             |          Peso em kg          | 9.8                     |
 | **Raça**             |      Raça predominante       | SRD                     |
+
+> Notas sobre os campos:
+> - Se **Nome**, **Número do Endereço** e **Raça** forem deixados em branco, serão salvos como "Não informado" no banco de dados.
+> - Se **Idade**, **Unidade da Idade** e **Peso** forem deixados em branco, serão salvos como ```NULL``` no banco de dados, mas exibidos para o usuário como "Não informado".
 
 ### 🗃️ Arquitetura do banco de dados
 
