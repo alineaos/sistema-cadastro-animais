@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import shelter.animal.exceptions.BusinessException;
-import shelter.animal.exceptions.ConsoleException;
 import shelter.animal.utils.ConsoleUtils;
 import shelter.animal.utils.InputValidator;
 

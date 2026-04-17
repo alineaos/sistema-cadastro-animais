@@ -244,7 +244,8 @@ public class AnimalMenu {
         if (id == 0) return;
 
         System.out.printf("ID selecionado: %d\n", id);
-        if (!confirmAction("Atenção: Você tem certeza que deseja deletar o cadastro selecionado? Essa ação é irreversível."))
+        System.out.println("Atenção: Você tem certeza que deseja deletar o cadastro selecionado? Essa ação é irreversível.");
+        if (!confirmAction())
             return;
 
         controller.delete(id);
@@ -418,8 +419,7 @@ public class AnimalMenu {
         };
     }
 
-    private boolean confirmAction(String text) {
-        System.out.println(text);
+    private boolean confirmAction() {
         while (true) {
             System.out.println("[1] Confirmar");
             System.out.println("[2] Cancelar");
