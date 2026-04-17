@@ -1,10 +1,15 @@
 package shelter.animal.menu;
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import shelter.animal.controller.AnimalController;
 import shelter.animal.dto.response.AnimalGetResponse;
 import shelter.animal.dto.response.AnimalPostResponse;
+import shelter.animal.exceptions.BusinessException;
+import shelter.animal.exceptions.InvalidRequestException;
+import shelter.animal.exceptions.NotFoundException;
 import shelter.animal.models.enums.AgeUnit;
 import shelter.animal.models.enums.AnimalSex;
 import shelter.animal.models.enums.AnimalType;
@@ -25,6 +30,7 @@ import java.util.regex.Pattern;
 @Component
 @RequiredArgsConstructor
 public class AnimalMenu {
+    private static final Logger log = LoggerFactory.getLogger(AnimalMenu.class);
     private final Scanner scanner;
     private final ConsoleUtils console;
     private final InputValidator validator;
@@ -32,13 +38,26 @@ public class AnimalMenu {
 
     public void runAnimalMenu() {
         while (true) {
-            int option;
-            do {
-                showAnimalMenu();
-                option = validator.parseInteger(scanner.nextLine());
-            } while (option < 0 | option > 6);
-            if (option == 0) return;
-            processingAnimalMenuOption(option);
+            try {
+                int option;
+                do {
+                    showAnimalMenu();
+                    option = validator.parseInteger(scanner.nextLine());
+                } while (option < 0 | option > 6);
+                if (option == 0) return;
+                processingAnimalMenuOption(option);
+            } catch (BusinessException | NotFoundException e) {
+                log.warn("Aviso: {}", e.getMessage());
+                System.out.println("Aviso: " + e.getMessage());
+                console.sleep(2);
+            } catch (InvalidRequestException e) {
+                e.getConstraintViolations().forEach(constraint ->
+                        log.info("{} {}", e.getMessage(), constraint.getMessageTemplate()));
+                System.out.print("Dados inválidos:");
+                e.getConstraintViolations()
+                        .forEach(constraint -> System.out.printf(" '%s' ", constraint.getMessageTemplate()));
+                console.sleep(3);
+            }
         }
     }
 

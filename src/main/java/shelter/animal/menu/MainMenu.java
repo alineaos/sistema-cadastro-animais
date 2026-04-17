@@ -6,8 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import shelter.animal.exceptions.BusinessException;
-import shelter.animal.exceptions.InvalidRequestException;
-import shelter.animal.exceptions.NotFoundException;
+import shelter.animal.exceptions.ConsoleException;
 import shelter.animal.utils.ConsoleUtils;
 import shelter.animal.utils.InputValidator;
 
@@ -26,8 +25,8 @@ public class MainMenu implements CommandLineRunner {
     @Override
     public void run(String... args) {
         do {
-            console.clear();
             try {
+                console.clear();
                 System.out.println();
                 System.out.println("**********************************");
                 System.out.println("* SISTEMA DE CADASTRO DE ANIMAIS *");
@@ -40,29 +39,24 @@ public class MainMenu implements CommandLineRunner {
 
                 int option = validator.parseInteger(scanner.nextLine());
 
-                if (option == 0) {
-                    System.out.println("Sistema encerrado.");
-                    return;
-                }
-
-
                 switch (option) {
                     case 1 -> {
                         console.clear();
                         animalMenu.runAnimalMenu();
                     }
+                    case 0 -> {
+                        System.out.println("Sistema encerrado.");
+                        return;
+                    }
                     default -> System.out.println("Opção inválida");
                 }
-            } catch (BusinessException | NotFoundException e) {
+            } catch (BusinessException e) {
                 log.warn("Aviso: {}", e.getMessage());
                 System.out.println("Aviso: " + e.getMessage());
                 console.sleep(2);
-            } catch (InvalidRequestException e) {
-                e.getConstraintViolations().forEach(constraint ->
-                        log.info("{} {}", e.getMessage(), constraint.getMessageTemplate()));
-                System.out.print("Dados inválidos:");
-                e.getConstraintViolations()
-                        .forEach(constraint -> System.out.printf(" '%s' ", constraint.getMessageTemplate()));
+            } catch (Exception e) {
+                log.error("Erro: {}", e.getMessage());
+                System.out.println("Erro: " + e.getMessage());
                 console.sleep(3);
             }
         } while (true);
