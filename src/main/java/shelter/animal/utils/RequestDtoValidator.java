@@ -13,9 +13,9 @@ import java.util.Set;
 public class RequestDtoValidator {
     private final Validator validator;
 
-    public <T> void validateRequest(T requestDto){
+    public <T> void validateRequest(T requestDto) {
         Set<ConstraintViolation<T>> violations = validator.validate(requestDto);
-        if (!violations.isEmpty()){
+        if (!violations.isEmpty()) {
             throw new InvalidRequestException("Dados inválidos:", violations);
         }
     }

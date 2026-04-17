@@ -19,6 +19,7 @@ public interface AnimalMapper {
     Animal toAnimal(AnimalPostRequest postRequest);
 
     AnimalPostResponse toAnimalPostResponse(Animal animal);
+
     AnimalGetResponse toAnimalGetResponse(Animal animal);
 
     List<AnimalGetResponse> toAnimalGetResponseList(List<Animal> animalList);

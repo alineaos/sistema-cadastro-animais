@@ -24,7 +24,7 @@ public class MainMenu implements CommandLineRunner {
     private final AnimalMenu animalMenu;
 
     @Override
-    public void run(String... args){
+    public void run(String... args) {
         do {
             console.clear();
             try {
@@ -57,7 +57,7 @@ public class MainMenu implements CommandLineRunner {
                 log.warn("Aviso: {}", e.getMessage());
                 System.out.println("Aviso: " + e.getMessage());
                 console.sleep(2);
-            } catch (InvalidRequestException e){
+            } catch (InvalidRequestException e) {
                 e.getConstraintViolations().forEach(constraint ->
                         log.info("{} {}", e.getMessage(), constraint.getMessageTemplate()));
                 System.out.print("Dados inválidos:");
@@ -65,6 +65,6 @@ public class MainMenu implements CommandLineRunner {
                         .forEach(constraint -> System.out.printf(" '%s' ", constraint.getMessageTemplate()));
                 console.sleep(3);
             }
-        }while (true);
+        } while (true);
     }
 }

@@ -18,18 +18,18 @@ public enum AnimalSex {
         this.classification = classification;
     }
 
-    public static AnimalSex selectByCode(int codeInput){
-        for (AnimalSex sex : AnimalSex.values()){
-            if(codeInput == sex.getCode()){
+    public static AnimalSex selectByCode(int codeInput) {
+        for (AnimalSex sex : AnimalSex.values()) {
+            if (codeInput == sex.getCode()) {
                 return sex;
             }
         }
         throw new BusinessException("O código [%d] não existe.".formatted(codeInput));
     }
 
-    public static AnimalSex selectSex(char abbreviationOption){
-        for (AnimalSex animalSex : AnimalSex.values()){
-            if(animalSex.abbreviation == abbreviationOption){
+    public static AnimalSex selectSex(char abbreviationOption) {
+        for (AnimalSex animalSex : AnimalSex.values()) {
+            if (animalSex.abbreviation == abbreviationOption) {
                 return animalSex;
             }
         }

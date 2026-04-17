@@ -20,5 +20,4 @@ public record AnimalPatchRequest(
         @DecimalMax(value = "60.0", message = "O peso não pode ser maior que 60kg")
         Double weight,
         String breed
-){
-}
+) {}

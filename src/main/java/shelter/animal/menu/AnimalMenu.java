@@ -217,7 +217,7 @@ public class AnimalMenu {
         printAnimalTable(getResponses);
     }
 
-    private void handleDelete(){
+    private void handleDelete() {
         System.out.println("Digite o ID do cadastro a ser deletado ou 0 para cancelar. ");
         System.out.print("ID: ");
         Long id = validator.parseLong(scanner.nextLine());
@@ -225,13 +225,14 @@ public class AnimalMenu {
         if (id == 0) return;
 
         System.out.printf("ID selecionado: %d\n", id);
-        if(!confirmAction("Atenção: Você tem certeza que deseja deletar o cadastro selecionado? Essa ação é irreversível.")) return;
+        if (!confirmAction("Atenção: Você tem certeza que deseja deletar o cadastro selecionado? Essa ação é irreversível."))
+            return;
 
         controller.delete(id);
         System.out.println("Cadastro deletado com sucesso.");
     }
 
-    private void handleUpdate(){
+    private void handleUpdate() {
         System.out.println("Digite o ID do cadastro a ser atualizado.");
         System.out.print("ID: ");
         Long id = validator.parseLong(scanner.nextLine());
@@ -398,9 +399,9 @@ public class AnimalMenu {
         };
     }
 
-    private boolean confirmAction(String text){
-            System.out.println(text);
-        while(true){
+    private boolean confirmAction(String text) {
+        System.out.println(text);
+        while (true) {
             System.out.println("[1] Confirmar");
             System.out.println("[2] Cancelar");
             System.out.print("Opção: ");

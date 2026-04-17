@@ -6,6 +6,7 @@ import shelter.animal.utils.AppConstants;
 
 public class AddressConverter implements AttributeConverter<Address, String> {
     private final String DELIMITER = ", ";
+
     @Override
     public String convertToDatabaseColumn(Address address) {
         String number = address.getNumber() == null ? AppConstants.NAO_INFORMADO : address.getNumber();

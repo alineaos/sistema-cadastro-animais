@@ -17,4 +17,5 @@ public record AnimalFilter(
         AgeUnit ageUnit,
         Double weight,
         String breed,
-        LocalDate createdAt) {}
+        LocalDate createdAt
+) {}

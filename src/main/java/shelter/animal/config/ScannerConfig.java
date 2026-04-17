@@ -8,7 +8,7 @@ import java.util.Scanner;
 @Component
 public class ScannerConfig {
     @Bean
-    public Scanner scanner(){
+    public Scanner scanner() {
         return new Scanner(System.in);
     }
 }

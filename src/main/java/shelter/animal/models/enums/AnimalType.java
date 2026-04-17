@@ -16,18 +16,18 @@ public enum AnimalType {
         this.label = label;
     }
 
-    public static AnimalType selectByCode(int codeInput){
-        for (AnimalType type : AnimalType.values()){
-            if(codeInput == type.getCode()){
+    public static AnimalType selectByCode(int codeInput) {
+        for (AnimalType type : AnimalType.values()) {
+            if (codeInput == type.getCode()) {
                 return type;
             }
         }
         throw new BusinessException("O código [%d] não existe.".formatted(codeInput));
     }
 
-    public static AnimalType selectByType(String typeInput){
-        for (AnimalType type : AnimalType.values()){
-            if(type.label.equalsIgnoreCase(typeInput)){
+    public static AnimalType selectByType(String typeInput) {
+        for (AnimalType type : AnimalType.values()) {
+            if (type.label.equalsIgnoreCase(typeInput)) {
                 return type;
             }
         }

@@ -16,18 +16,18 @@ public enum AgeUnit {
         this.label = label;
     }
 
-    public static AgeUnit selectByCode(int codeInput){
+    public static AgeUnit selectByCode(int codeInput) {
         for (AgeUnit unit : AgeUnit.values()) {
-            if(unit.getCode() == codeInput){
+            if (unit.getCode() == codeInput) {
                 return unit;
             }
         }
         throw new BusinessException("O código [%d] não existe.".formatted(codeInput));
     }
 
-    public static AgeUnit selectByLabel(String labelInput){
+    public static AgeUnit selectByLabel(String labelInput) {
         for (AgeUnit unit : AgeUnit.values()) {
-            if(unit.getLabel().equalsIgnoreCase(labelInput)){
+            if (unit.getLabel().equalsIgnoreCase(labelInput)) {
                 return unit;
             }
         }

@@ -9,7 +9,7 @@ public class InvalidRequestException extends ConstraintViolationException {
     public InvalidRequestException(String message, Set<? extends ConstraintViolation<?>> constraintViolations) {
         super(message, constraintViolations);
 
-        for(ConstraintViolation<?> constraintMessage : constraintViolations){
+        for (ConstraintViolation<?> constraintMessage : constraintViolations) {
             constraintMessage.getMessageTemplate();
         }
 
